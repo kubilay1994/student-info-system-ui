@@ -22,7 +22,7 @@ const LoginForm = props => {
         setLoading(false);
     };
 
-    console.log(isAuth, token);
+    // console.log(isAuth, token);
     return (
         <form autoComplete="on" className={classes.container}>
             <header>
