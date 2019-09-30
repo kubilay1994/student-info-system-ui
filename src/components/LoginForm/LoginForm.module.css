@@ -1,0 +1,51 @@
+header {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    
+}
+
+header > h3 {
+    text-align: center;
+}
+
+.logo {
+    width: 7rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 2px 3px 3px slategray;
+    padding: 1rem;
+    margin : 0.4rem;
+    flex-basis: 100%;
+    max-width: 25rem;
+    background-image: linear-gradient(whitesmoke 70%,#c9dbe7);
+    /* 85acc5 */
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.formLabel {
+    margin: 0.2rem;
+    padding: 0.1rem;
+    font-size: 0.8rem;
+}
+
+.formInput {
+    border: 2px solid rgb(226, 221, 221);
+    border-radius: 10px;
+    padding: 0.3rem;
+}
+
+.formInput:focus {
+    outline: none;
+}
+

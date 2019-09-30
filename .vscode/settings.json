@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*.js": "javascriptreact"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.showSuggestionsAsSnippets": true,
+    "emmet.showAbbreviationSuggestions": false,
+    
+}
