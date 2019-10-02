@@ -7,8 +7,7 @@ import AuthContext from './context/auth-context';
 import restAPI from './axios-instances';
 
 function App() {
-    const [isAuth, setIsAuth] = useState(false);
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState(() => localStorage.getItem('token'));
 
     const handleLogin = useCallback(async (username, password) => {
         try {
@@ -21,24 +20,29 @@ function App() {
                     returnSecureToken: true
                 }
             );
-            setToken(data.idToken)
-            setIsAuth(true);
+            console.log(data);
+            setToken(data.idToken);
+            localStorage.setItem('token', data.idToken);
         } catch (error) {
             console.log(error.response);
         }
     }, []);
+
     return (
         <AuthContext.Provider
             value={{
-                isAuth,
                 token,
                 login: handleLogin,
                 singup: () => {}
             }}
         >
-            <div className={styles.container}>
-                <LoginForm />
-            </div>
+            {!token ? (
+                <div className={styles.container}>
+                    <LoginForm />
+                </div>
+            ) : (
+                <p>Welcome to our project</p>
+            )}
         </AuthContext.Provider>
     );
 }

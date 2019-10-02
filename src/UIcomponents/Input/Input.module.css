@@ -1,7 +1,7 @@
 .inputContainer {
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 80%;
 }
 
 .formLabel {
@@ -16,8 +16,20 @@
     border-radius: 10px;
     padding: 0.5rem;
     background-color: whitesmoke;
+    min-height: 1.5rem;
+    font : inherit;
 }
 
 .formInput:focus {
     outline: none
+}
+
+.errorInput  {
+    border : 1.25px solid crimson;
+}
+.error {
+    font: inherit;
+    color : crimson;
+    margin : 0.3rem;
+    text-align : center;
 }

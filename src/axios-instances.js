@@ -7,5 +7,4 @@ const restAPI = axios.create({
 });
 
 
-
 export default restAPI;
