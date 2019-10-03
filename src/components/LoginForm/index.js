@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Formik, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 
 import classes from './LoginForm.module.css';
 
 import Button from '../../UIcomponents/Button';
-import Input from '../../UIcomponents/Input';
+import FormInput from '../../UIcomponents/FormInput';
 
 import logo from './yildiz_logo_gercek.svg';
 
@@ -48,11 +48,6 @@ const LoginForm = props => {
             }}
         >
             {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
                 handleSubmit,
                 isSubmitting,
                 // isValid,
@@ -62,6 +57,7 @@ const LoginForm = props => {
                     className={classes.container}
                     onSubmit={handleSubmit}
                     autoComplete="on"
+                    
                 >
                     <header>
                         <img src={logo} className={classes.logo} alt="Logo" />
@@ -76,25 +72,19 @@ const LoginForm = props => {
                         className={classes.error}
                     />
 
-                    <Input
+                    <Field
+                        component={FormInput}
                         type="text"
-                        label="username"
+                        label="Username"
                         name="username"
-                        placeholder="username"
-                        value={values.username}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={touched.username && errors.username}
+                        placeholder="Username"
                     />
-                    <Input
+                    <Field
+                        component={FormInput}
                         type="password"
                         name="password"
                         label="Password"
                         placeholder="password"
-                        value={values.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={touched.password && errors.password}
                     />
 
                     <ReCaptcha
