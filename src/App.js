@@ -1,49 +1,23 @@
-import React, { useState, useCallback } from 'react';
-import styles from './App.module.css';
+import React, { useContext, lazy, Suspense } from 'react';
+import { Router } from '@reach/router';
 
-import LoginForm from '../src/components/LoginForm';
 import AuthContext from './context/auth-context';
 
-import restAPI from './axios-instances';
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const MainPage = lazy(() => import('./pages/MainPage'));
+
+const NotFound = props => <p>Not found</p>;
 
 function App() {
-    const [token, setToken] = useState(() => localStorage.getItem('token'));
-
-    const handleLogin = useCallback(async (username, password) => {
-        try {
-            const key = 'AIzaSyCpwgagPGGwVPSdQ0Yy_olLza3fnbtsAXc';
-            const { data } = await restAPI.post(
-                `accounts:signInWithPassword?key=${key}`,
-                {
-                    email: username,
-                    password,
-                    returnSecureToken: true
-                }
-            );
-            console.log(data);
-            setToken(data.idToken);
-            localStorage.setItem('token', data.idToken);
-        } catch (error) {
-            console.log(error.response);
-        }
-    }, []);
-
+    const { token } = useContext(AuthContext);
     return (
-        <AuthContext.Provider
-            value={{
-                token,
-                login: handleLogin,
-                singup: () => {}
-            }}
-        >
-            {!token ? (
-                <div className={styles.container}>
-                    <LoginForm />
-                </div>
-            ) : (
-                <p>Welcome to our project</p>
-            )}
-        </AuthContext.Provider>
+        <Suspense fallback={<div>Loading ...</div>}>
+            <Router>
+                {token && <MainPage path="/" />}
+                {!token && <LoginPage path="/login" />}
+                <NotFound default />
+            </Router>
+        </Suspense>
     );
 }
 

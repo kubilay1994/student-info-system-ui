@@ -3,14 +3,19 @@ import classes from './FormInput.module.css';
 
 import { ErrorMessage } from 'formik';
 
-const FormInput = ({ field, form: { touched,errors }, ...rest }) => (
-    <div className={[classes.inputContainer, rest.containerClass].join('')}>
-        {rest.label && (
-            <label
-                form={rest.labelFor}
-                className={[classes.formLabel, rest.labelClass].join(' ')}
-            >
-                {rest.label}
+const FormInput = ({
+    label,
+    inputClass,
+    labelClass,
+    containerClass,
+    field,
+    form: { touched, errors },
+    ...rest
+}) => (
+    <div className={[classes.inputContainer, containerClass].join('')}>
+        {label && (
+            <label className={[classes.formLabel, labelClass].join(' ')}>
+                {label}
             </label>
         )}
 
@@ -18,7 +23,7 @@ const FormInput = ({ field, form: { touched,errors }, ...rest }) => (
             className={[
                 classes.formInput,
                 errors[field.name] && touched[field.name] && classes.errorInput,
-                rest.inputClass
+                inputClass
             ].join(' ')}
             {...field}
             {...rest}
@@ -31,5 +36,5 @@ const FormInput = ({ field, form: { touched,errors }, ...rest }) => (
     </div>
 );
 
-export default React.memo(FormInput);
-// export default Input;
+// export default React.memo(FormInput);
+export default FormInput;

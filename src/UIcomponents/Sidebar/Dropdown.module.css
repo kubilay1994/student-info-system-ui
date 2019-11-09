@@ -1,0 +1,83 @@
+.dropdownMenu {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    transition: max-height 0.5s ease-out, padding 0.2s ease-out;
+    box-shadow: 0 0.3rem 0.3rem -0.3rem #0c0d0e inset,
+        0 -0.3rem 0.3rem -0.3rem #0c0d0e inset;
+    overflow: hidden;
+    background: #3e5a7b;
+}
+
+.item {
+    display: flex;
+}
+
+.dropdownMenu > li > a {
+    padding-left: 2rem;
+}
+.dropdownMenu > li > ul > li a {
+    padding-left: 4rem;
+}
+.dropdownMenu ul {
+    background: #4b6d92;
+}
+
+.dropDownHeader {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropDownHeader:hover > a > .caretIcon,
+.dropDownHeader:focus a > .caretIcon,
+.dropDownHeader:active a > .caretIcon {
+    transform: rotate(-90deg);
+}
+
+.dropDownHeader:hover > ul,
+.dropDownHeader:focus > ul,
+.dropDownHeader:active > ul {
+    padding: 0.5rem 0;
+    max-height: 500px;
+    transition: max-height 0.7s ease-in, padding 0.3s ease-in;
+}
+
+.caretIcon {
+    margin-left: auto;
+    transition: all 0.25s ease-out;
+}
+
+.icon {
+    margin: 0 0.5rem;
+}
+
+@media (width > 60rem) {
+    .dropdownMenu {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: fit-content;
+        min-width: 15rem;
+        overflow: visible;
+        transition: all 0.3s ease-out;
+    }
+
+    .dropdownMenu > li > a {
+        padding-left: 0.5rem;
+    }
+    .dropdownMenu > li > ul > li a {
+        padding-left: 0.5rem;
+    }
+
+    .dropDownHeader:hover > ul,
+    .dropDownHeader:focus > ul,
+    .dropDownHeader:active > ul {
+        display: flex;
+        padding: 0;
+    }
+}

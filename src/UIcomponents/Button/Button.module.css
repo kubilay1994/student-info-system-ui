@@ -1,25 +1,18 @@
-
-
-
 .btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
     background-color: #2e659c;
     cursor: pointer;
     color: white;
     border: none;
     outline: none;
     padding: 0.5rem;
-    width: 80%;
     border-radius: 5px;
     font: inherit;
     font-weight: bold;
-    height: 1.5rem;
 }
 
-
 .btn:hover,
+.btn:focus,
 .btn:active {
     background: #028fbe;
     color: whitesmoke;
@@ -32,4 +25,29 @@
     background: #949393;
     color: whitesmoke;
     cursor: auto;
+}
+
+
+.outline-red {
+    background: white;
+    border: 1px solid crimson;
+    color: crimson;
+}
+.outline-red:hover,
+.outline-red:focus,
+.outline-red:active {
+    background: crimson;
+    color: white;
+}
+
+.outline-blue {
+    background: whitesmoke;
+    border: 1px solid #3fc1c9;
+    color: #235255;
+}
+.outline-blue:hover,
+.outline-blue:focus,
+.outline-blue:active {
+    background: #3fc1c9;
+    color: whitesmoke;
 }

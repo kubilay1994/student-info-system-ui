@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-import { Formik, ErrorMessage, Field } from 'formik';
+import { Formik, ErrorMessage, FastField } from 'formik';
 import * as Yup from 'yup';
+import { navigate } from '@reach/router';
 
 import classes from './LoginForm.module.css';
 
 import Button from '../../UIcomponents/Button';
 import FormInput from '../../UIcomponents/FormInput';
 
-import logo from './yildiz_logo_gercek.svg';
+import logo from './yildiz_logo_gercek.png';
 
 import AuthContext from '../../context/auth-context';
 import ReCaptcha from 'react-google-recaptcha';
@@ -17,7 +18,7 @@ const reCaptchaKey = '6LeedrsUAAAAAOfoIrPCidkMGZkin1OBYP_GAwlF';
 const loginValidationSchema = Yup.object().shape({
     username: Yup.string()
         .trim()
-        .email()
+        // .email()
         // .matches(
         //     /^[A-Za-z][0-9]{7,8}$/,
         //     'Username must start with a letter than continue with 7 or 8 numbers'
@@ -27,23 +28,28 @@ const loginValidationSchema = Yup.object().shape({
         .trim()
         .min(6)
         .required(),
-    isVerified: Yup.string().required('Invalid Security Info')
+    isVerified: Yup.string()
+        .required('Invalid Security Info')
+        .nullable()
 });
 
 const LoginForm = props => {
-    const { login } = useContext(AuthContext);
+    const { login, error: AuthError } = useContext(AuthContext);
 
     return (
         <Formik
             initialValues={{
                 username: '',
                 password: '',
-                isVerified: ''
+                isVerified: null
             }}
             validationSchema={loginValidationSchema}
             onSubmit={async ({ username, password }, { setSubmitting }) => {
                 setSubmitting(true);
-                await login(username, password);
+                const success = await login(username, password);
+                if (success) {
+                    navigate('/');
+                }
                 setSubmitting(false);
             }}
         >
@@ -57,7 +63,6 @@ const LoginForm = props => {
                     className={classes.container}
                     onSubmit={handleSubmit}
                     autoComplete="on"
-                    
                 >
                     <header>
                         <img src={logo} className={classes.logo} alt="Logo" />
@@ -66,20 +71,27 @@ const LoginForm = props => {
                         </h3>
                     </header>
 
+                    {AuthError && (
+                        <div className={classes.error}>
+                            {/* Oturum süreniz dolmuştur. Lütfen tekrar giriş
+                            yapınız. */}
+                            {AuthError.message}
+                        </div>
+                    )}
                     <ErrorMessage
                         name="isVerified"
                         component="div"
                         className={classes.error}
                     />
 
-                    <Field
+                    <FastField
                         component={FormInput}
                         type="text"
                         label="Username"
                         name="username"
                         placeholder="Username"
                     />
-                    <Field
+                    <FastField
                         component={FormInput}
                         type="password"
                         name="password"
@@ -93,7 +105,11 @@ const LoginForm = props => {
                         onChange={token => setFieldValue('isVerified', token)}
                         className={classes.reCaptcha}
                     />
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        btnCLass={classes.block}
+                    >
                         Login
                     </Button>
                 </form>

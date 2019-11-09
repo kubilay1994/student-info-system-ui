@@ -1,0 +1,33 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 8;
+    background: #3fc1c9;
+    height: 4rem;
+}
+
+.headerItem {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.menuIcon {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0.3rem;
+    background: burlywood;
+}
+.menuIcon:hover {
+    background: chocolate;
+}
+

@@ -3,22 +3,23 @@ header {
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    margin-top: 5%;    
+    margin-top: 5%;
 }
 
 header > h3 {
     text-align: center;
     font-size: 1.24rem;
+    /* color: white */
 }
 
 .logo {
-    width: 7rem;
+    width: 7.5rem;
 }
 
 .reCaptcha {
-    margin : 5%;
+    margin: 5%;
     transform: scale(0.75);
-    border : 2px solid #85acc5;
+    border: 2px solid #85acc5;
 }
 
 .container {
@@ -27,25 +28,29 @@ header > h3 {
     align-items: center;
     box-shadow: 2px 2px 3px 3px slategray;
     padding: 1rem;
-    margin : 4%;
+    margin: 4%;
     flex-basis: 100%;
     max-width: 25rem;
-    min-width:  0;
-    background-image: linear-gradient(to top,#85acc5,#c9dbe7 70%);
+    min-width: 0;
+    background-image: linear-gradient(to top, #85acc5, #c9dbe7 70%);
+    /* background: #3b345c */
     /* 85acc5 */
 }
 
 .error {
     font: inherit;
-    color : crimson;
-    margin : 0.3rem;
-    text-align : center;
+    color: crimson;
+    margin: 0.3rem;
+    text-align: center;
+    text-align: center;
 }
 
-@media (min-width : 40rem) {
+.block {
+    width: 80%;
+}
+
+@media (min-width: 40rem) {
     .reCaptcha {
-        transform: scale(.95);
+        transform: scale(0.95);
     }
 }
-
-
