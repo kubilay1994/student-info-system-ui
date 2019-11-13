@@ -12,7 +12,7 @@ const FormInput = ({
     form: { touched, errors },
     ...rest
 }) => (
-    <div className={[classes.inputContainer, containerClass].join('')}>
+    <div className={[classes.inputContainer, containerClass].join(' ')}>
         {label && (
             <label className={[classes.formLabel, labelClass].join(' ')}>
                 {label}

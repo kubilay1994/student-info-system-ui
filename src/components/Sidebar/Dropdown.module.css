@@ -5,7 +5,7 @@
     margin: 0;
     padding: 0;
     max-height: 0;
-    transition: max-height 0.5s ease-out, padding 0.2s ease-out;
+    transition: max-height 0.5s ease-out;
     box-shadow: 0 0.3rem 0.3rem -0.3rem #0c0d0e inset,
         0 -0.3rem 0.3rem -0.3rem #0c0d0e inset;
     overflow: hidden;
@@ -32,18 +32,17 @@
     flex-direction: column;
 }
 
-.dropDownHeader:hover > a > .caretIcon,
-.dropDownHeader:focus a > .caretIcon,
-.dropDownHeader:active a > .caretIcon {
+.dropDownHeader:hover .caretIcon,
+.dropDownHeader:focus .caretIcon,
+.dropDownHeader:active .caretIcon {
     transform: rotate(-90deg);
 }
 
 .dropDownHeader:hover > ul,
 .dropDownHeader:focus > ul,
 .dropDownHeader:active > ul {
-    padding: 0.5rem 0;
     max-height: 500px;
-    transition: max-height 0.7s ease-in, padding 0.3s ease-in;
+    transition: max-height 0.7s ease-in;
 }
 
 .caretIcon {
@@ -55,7 +54,7 @@
     margin: 0 0.5rem;
 }
 
-@media (width > 60rem) {
+@media (min-width: 60rem) {
     .dropdownMenu {
         display: none;
         position: absolute;

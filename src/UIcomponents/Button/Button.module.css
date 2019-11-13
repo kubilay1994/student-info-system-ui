@@ -7,7 +7,6 @@
     outline: none;
     padding: 0.5rem;
     border-radius: 5px;
-    font: inherit;
     font-weight: bold;
 }
 
@@ -50,4 +49,14 @@
 .outline-blue:active {
     background: #3fc1c9;
     color: whitesmoke;
+}
+
+.turkuaz {
+    background: #349ca1;
+}
+
+.turkuaz:hover,
+.turkuaz:focus,
+.turkuaz:active {
+    background: #3fc1c9;
 }

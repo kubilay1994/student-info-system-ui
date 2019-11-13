@@ -49,6 +49,11 @@ header > h3 {
     width: 80%;
 }
 
+.loginInputContainer {
+    width: 80%;
+}
+
+
 @media (min-width: 40rem) {
     .reCaptcha {
         transform: scale(0.95);

@@ -90,6 +90,7 @@ const LoginForm = props => {
                         label="Username"
                         name="username"
                         placeholder="Username"
+                        containerClass={classes.loginInputContainer}
                     />
                     <FastField
                         component={FormInput}
@@ -97,6 +98,7 @@ const LoginForm = props => {
                         name="password"
                         label="Password"
                         placeholder="password"
+                        containerClass={classes.loginInputContainer}
                     />
 
                     <ReCaptcha

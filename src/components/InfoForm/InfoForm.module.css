@@ -1,0 +1,42 @@
+.infoForm {
+    display: flex;
+    width: 100vw;
+    max-width: 45rem;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2rem;
+    padding: 3rem;
+}
+.infoForm > span {
+    align-self: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.inputGrup {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+.saveButton {
+    margin: 1rem;
+    width: 100%;
+    font-size: 1.1rem;
+    align-self: center;
+}
+
+@media (min-width: 40rem) {
+    .infoForm {
+        box-shadow: 1px 1px 10px 1px #ccc;
+        width: 80vw;
+    }
+    .inputGrup {
+        flex-direction: row;
+    }
+    .saveButton {
+        width: 50%;
+    }
+}

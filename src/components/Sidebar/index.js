@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from '@reach/router';
 
 import classes from './Sidebar.module.css';
-import Button from '../Button';
+import Button from '../../UIcomponents/Button';
 import Dropdown from './Dropdown';
 
-import { FaArchive } from 'react-icons/fa';
+import { FaArchive, FaAddressBook, FaClipboardList } from 'react-icons/fa';
 
 const Sidebar = ({ onLogout, open }) => {
     const isActive = ({ isCurrent }) => {
@@ -32,15 +32,15 @@ const Sidebar = ({ onLogout, open }) => {
                     </Link>
                 </li>
                 <li className={classes.item}>
-                    <Link to="#a" getProps={isActive}>
-                        <FaArchive size={20} className={classes.icon} />
-                        Some Link
+                    <Link to="courseSchedule" getProps={isActive}>
+                        <FaClipboardList size={20} className={classes.icon} />
+                        Ders Programı
                     </Link>
                 </li>
                 <li className={classes.item}>
-                    <Link to="#b" getProps={isActive}>
-                        <FaArchive size={20} className={classes.icon} />
-                        Some Link
+                    <Link to="updateContactInfo" getProps={isActive}>
+                        <FaAddressBook size={20} className={classes.icon} />
+                        Öğrenci İletişim Bilgisi Düzenleme
                     </Link>
                 </li>
                 <Dropdown

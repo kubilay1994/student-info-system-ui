@@ -1,0 +1,48 @@
+.title {
+    text-align: center;
+    margin-top : 2rem;
+    margin-bottom: 0;
+}
+
+.container {
+    margin: auto;
+    margin-top: 1.5rem;
+    padding-bottom: 1rem;
+    width: 100vw;
+    overflow: auto;
+    background: whitesmoke;
+}
+
+.table {
+    border-collapse: collapse;
+    display: inline-table;
+    margin: 1rem 3rem;
+}
+
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    width: 6rem;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.table th {
+    border-bottom-color: #777;
+}
+
+.table th:first-child {
+    border-right-color: #777;
+}
+
+.table tbody td:first-child {
+    border-right-color: #777;
+}
+
+@media (min-width: 40rem) {
+    .container {
+        width: fit-content;
+        box-shadow: 3px 3px 6px 6px rgba(128, 128, 128, 0.363);
+    }
+}

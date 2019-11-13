@@ -37,7 +37,6 @@
     flex-direction: column;
 }
 
-
 .sidebarLink {
     display: flex;
     align-items: center;
@@ -48,11 +47,14 @@
     color: whitesmoke;
 }
 
-.sidebarLink:hover {
+
+.sidebarLink:hover,
+.sidebarLink:focus,
+.sidebarLink:active {
     background: #5a7696;
 }
 
-.linkActive {
+.sidebarLink.linkActive {
     background: #122b50;
 }
 
@@ -67,5 +69,3 @@
 .icon {
     margin: 0 0.5rem;
 }
-
-

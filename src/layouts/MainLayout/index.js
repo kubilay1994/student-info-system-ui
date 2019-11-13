@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
-import AuthContext from '../context/auth-context';
+import AuthContext from '../../context/auth-context';
 
-import Sidebar from '../UIcomponents/Sidebar';
-import Header from '../components/Header';
-import BackDrop from '../UIcomponents/Backdrop';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import BackDrop from '../../UIcomponents/Backdrop';
 
+import classes from './MainLayout.module.css';
 const MainLayout = () => {
     const { clearAuthData } = useContext(AuthContext);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -21,6 +22,7 @@ const MainLayout = () => {
                 onBackdropClick={() => setIsSidebarOpen(false)}
             />
             <Sidebar onLogout={LogoutHandler} open={isSidebarOpen}></Sidebar>
+            <div className={classes.h} />
         </>
     );
 };

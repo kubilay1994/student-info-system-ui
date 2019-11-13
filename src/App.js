@@ -13,7 +13,7 @@ function App() {
     return (
         <Suspense fallback={<div>Loading ...</div>}>
             <Router>
-                {token && <MainPage path="/" />}
+                {token && <MainPage path="/*" />}
                 {!token && <LoginPage path="/login" />}
                 <NotFound default />
             </Router>
