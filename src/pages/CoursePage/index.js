@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { FormInput, Button, Select } from '../../UIcomponents';
 
 import classes from './CoursePage.module.css';
+import restAPI from '../../axios-instances';
 
 const languages = [
     { value: 'Türkçe', label: 'Türkçe' },
@@ -12,7 +13,7 @@ const languages = [
 ];
 
 const schema = Yup.object().shape({
-    code: Yup.string().required('Ders kodu zorunludur'),
+    courseCode: Yup.string().required('Ders kodu zorunludur'),
     // prerequisite :
     credit: Yup.number()
         .required('Dersin kredisinin girilmesi zorunludur')
@@ -20,12 +21,16 @@ const schema = Yup.object().shape({
     language: Yup.string()
         .oneOf(['Türkçe', 'İngilizce'])
         .required(),
-    goal: Yup.string().max(500, 'Maksimum 500 karakter'),
-    description: Yup.string().max(500, 'Maksimum 500 karakter')
+    // goal: Yup.string().max(500, 'Maksimum 500 karakter'),
+    // description: Yup.string().max(500, 'Maksimum 500 karakter')
+    departmentCode: Yup.string()
+        .max(3)
+        .required(),
+    title: Yup.string().required()
 });
 
 const CoursePage = () => {
-    const [courses, ] = useState([
+    const [courses] = useState([
         { value: 'Hello', label: 'Hello' },
         { value: 'Kello', label: 'Kello' },
         { value: 'Dello', label: 'Dello' },
@@ -35,34 +40,53 @@ const CoursePage = () => {
         { value: 'Nello', label: 'Nello' }
     ]);
 
-    useEffect(() => {}, []);
+    const onSubmit = async (values, { resetForm }) => {
+        console.log(values);
+        try {
+            const res = await restAPI.post('/api/rest/admin/courses', values);
+            console.log(res);
+        } catch (error) {
+            console.log(error.message);
+        }
+        resetForm();
+    };
 
     return (
         <Formik
             initialValues={{
-                code: '',
-                prerequisite: [],
-                credit: 0,
-                language: 'Türkçe',
-                goal: '',
-                description: ''
+                departmentCode: '',
+                courseCode: '',
+                title: '',
+                prerequisites: [],
+                credit: '',
+                language: 'Türkçe'
             }}
             validationSchema={schema}
-            onSubmit={values => {
-                console.log(values);
-            }}
+            onSubmit={onSubmit}
         >
             {({ isSubmitting }) => (
                 <Form className={classes.container}>
                     <h2 className={classes.center}>DEPARTMAN DERS EKLEME</h2>
                     <Field
-                        name="code"
+                        name="departmentCode"
+                        component={FormInput}
+                        type="text"
+                        label="Departman kodu*"
+                    />
+                    <Field
+                        name="courseCode"
                         component={FormInput}
                         type="text"
                         label="Ders kodu*"
                     />
                     <Field
-                        name="prerequisite"
+                        name="title"
+                        component={FormInput}
+                        type="text"
+                        label="Ders Adı*"
+                    />
+                    <Field
+                        name="prerequisites"
                         label="Ön koşul dersleri"
                         component={Select}
                         options={courses}
@@ -74,7 +98,7 @@ const CoursePage = () => {
                         name="credit"
                         component={FormInput}
                         label="Dersin kredisi*"
-                        type="number"
+                        type="text"
                     />
                     <Field
                         name="language"
@@ -83,7 +107,7 @@ const CoursePage = () => {
                         options={languages}
                         containerClass={classes.center}
                     />
-                    <Field
+                    {/* <Field
                         name="goal"
                         component={FormInput}
                         componentType="textarea"
@@ -100,7 +124,7 @@ const CoursePage = () => {
                         placeholder="Maximum 500 karakter"
                         rows="4"
                         cols="4"
-                    />
+                    /> */}
                     <Button
                         type="submit"
                         disabled={isSubmitting}
