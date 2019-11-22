@@ -44,13 +44,11 @@ const LoginForm = props => {
                 isVerified: null
             }}
             validationSchema={loginValidationSchema}
-            onSubmit={async ({ username, password }, { setSubmitting }) => {
-                setSubmitting(true);
+            onSubmit={async ({ username, password }) => {
                 const success = await login(username, password);
                 if (success) {
                     navigate('/');
                 }
-                setSubmitting(false);
             }}
         >
             {({

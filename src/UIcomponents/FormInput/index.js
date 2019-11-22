@@ -4,6 +4,7 @@ import classes from './FormInput.module.css';
 import { ErrorMessage } from 'formik';
 
 const FormInput = ({
+    componentType,
     label,
     inputClass,
     labelClass,
@@ -11,30 +12,42 @@ const FormInput = ({
     field,
     form: { touched, errors },
     ...rest
-}) => (
-    <div className={[classes.inputContainer, containerClass].join(' ')}>
-        {label && (
-            <label className={[classes.formLabel, labelClass].join(' ')}>
-                {label}
-            </label>
-        )}
+}) => {
+    let Component;
+    switch (componentType) {
+        case 'textarea':
+            Component = 'textarea';
+            break;
+        default:
+            Component = 'input';
+    }
 
-        <input
-            className={[
-                classes.formInput,
-                errors[field.name] && touched[field.name] && classes.errorInput,
-                inputClass
-            ].join(' ')}
-            {...field}
-            {...rest}
-        ></input>
-        <ErrorMessage
-            className={classes.error}
-            name={field.name}
-            component="div"
-        />
-    </div>
-);
+    return (
+        <div className={[classes.inputContainer, containerClass].join(' ')}>
+            {label && (
+                <label className={[classes.formLabel, labelClass].join(' ')}>
+                    {label}
+                </label>
+            )}
 
-// export default React.memo(FormInput);
+            <Component
+                className={[
+                    classes.formInput,
+                    errors[field.name] &&
+                        touched[field.name] &&
+                        classes.errorInput,
+                    inputClass
+                ].join(' ')}
+                {...field}
+                {...rest}
+            ></Component>
+            <ErrorMessage
+                className={classes.error}
+                name={field.name}
+                component="div"
+            />
+        </div>
+    );
+};
+
 export default FormInput;

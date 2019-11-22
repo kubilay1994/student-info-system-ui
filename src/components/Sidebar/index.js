@@ -5,17 +5,24 @@ import classes from './Sidebar.module.css';
 import Button from '../../UIcomponents/Button';
 import Dropdown from './Dropdown';
 
-import { FaArchive, FaAddressBook, FaClipboardList } from 'react-icons/fa';
+import {
+    FaUserShield,
+    FaAddressBook,
+    FaClipboardList,
+    FaHome,
+    FaCreativeCommonsSa,
+    FaBookOpen
+} from 'react-icons/fa';
+
+const isActive = ({ isCurrent }) => {
+    const linkClasses = [classes.sidebarLink];
+    if (isCurrent) {
+        linkClasses.push(classes.linkActive);
+    }
+    return { className: linkClasses.join(' ') };
+};
 
 const Sidebar = ({ onLogout, open }) => {
-    const isActive = ({ isCurrent }) => {
-        const linkClasses = [classes.sidebarLink];
-        if (isCurrent) {
-            linkClasses.push(classes.linkActive);
-        }
-        return { className: linkClasses.join(' ') };
-    };
-
     return (
         <nav className={`${classes.container} ${open && classes.slide}`}>
             <header className={classes.sidebarHeader}>
@@ -27,8 +34,8 @@ const Sidebar = ({ onLogout, open }) => {
             <ul className={classes.items}>
                 <li className={classes.item}>
                     <Link to="/" getProps={isActive}>
-                        <FaArchive size={20} className={classes.icon} />
-                        Some Link
+                        <FaHome size={20} className={classes.icon} />
+                        Ana Sayfa
                     </Link>
                 </li>
                 <li className={classes.item}>
@@ -43,6 +50,13 @@ const Sidebar = ({ onLogout, open }) => {
                         Öğrenci İletişim Bilgisi Düzenleme
                     </Link>
                 </li>
+                <li className={classes.item}>
+                    <Link to="admin/createSection" getProps={isActive}>
+                        <FaUserShield size={20} className={classes.icon} />
+                        Ders Grubu Ekleme
+                    </Link>
+                </li>
+
                 <Dropdown
                     isActive={isActive}
                     headerData={dropDownHeaderData}
@@ -63,16 +77,40 @@ const Sidebar = ({ onLogout, open }) => {
 
 export default Sidebar;
 
-const dropDownHeaderData = { title: 'Some Link', path: '#' };
+const dropDownHeaderData = {
+    title: 'Admin İşlemleri',
+    path: '#',
+    HeaderIcon: FaUserShield
+};
 
 const dropdownItemData = [
-    { id: 1, path: '#', title: 'Some inner link' },
-    { id: 2, path: '#', title: 'Some inner link' },
+    {
+        id: 1,
+        path: '/admin/section',
+        title: 'Ders Grubu Ekleme',
+        Icon: FaUserShield
+    },
+    {
+        id: 2,
+        path: '/admin/departments',
+        title: 'Departman ekleme',
+        Icon: FaCreativeCommonsSa
+    },
     {
         id: 3,
+        path: '/admin/courses',
+        title: 'Ders işlemleri',
+        Icon: FaBookOpen
+    },
+    {
+        id: 4,
         dropdown: {
-            headerData: { path: '#', title: 'Even more' },
-            itemData: [{ id: 1, path: '#', title: 'wow' }]
+            headerData: {
+                path: '#',
+                title: 'Even more',
+                HeaderIcon: FaUserShield
+            },
+            itemData: [{ id: 1, path: '#', title: 'wow', Icon: FaUserShield }]
         }
     }
 ];

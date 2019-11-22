@@ -13,19 +13,15 @@
 .btn:hover,
 .btn:focus,
 .btn:active {
-    background: #028fbe;
+    /* background: #028fbe; */
+    /* opacity: 0.6; */
+    filter: brightness(150%);
     color: whitesmoke;
 }
 
 .btn:focus {
     outline: none;
 }
-.btn:disabled {
-    background: #949393;
-    color: whitesmoke;
-    cursor: auto;
-}
-
 
 .outline-red {
     background: white;
@@ -38,6 +34,14 @@
     background: crimson;
     color: white;
 }
+
+.red {
+    background: crimson;
+    border: 1px solid crimson;
+    color : white;
+}
+
+
 
 .outline-blue {
     background: whitesmoke;
@@ -55,8 +59,9 @@
     background: #349ca1;
 }
 
-.turkuaz:hover,
-.turkuaz:focus,
-.turkuaz:active {
-    background: #3fc1c9;
+
+.btn:disabled {
+    background: #949393;
+    color: whitesmoke;
+    cursor: not-allowed;
 }

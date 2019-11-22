@@ -5,7 +5,6 @@ import restAPI from '../axios-instances';
 const AuthContext = React.createContext({
     token: null,
     error: null,
-    enterDate: null,
     login: () => {},
     singup: () => {},
     clearAuthData: () => {}
@@ -19,6 +18,7 @@ const getTokenAndAdjustLocalStorage = () => {
     if (token && expireTime < Date.now()) {
         localStorage.removeItem('token');
         localStorage.removeItem('expiresInMillis');
+        return null;
     }
     return token;
 };
@@ -26,14 +26,12 @@ const getTokenAndAdjustLocalStorage = () => {
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(() => getTokenAndAdjustLocalStorage());
     const [error, setError] = useState(null);
-    const [enterDate, setEnterDate] = useState(null);
 
     useEffect(() => {
         const interceptor = restAPI.interceptors.response.use(
             res => res,
             err => {
-                const { status } = err.response;
-                if (status === 401) {
+                if (err.response && err.response.status === 401) {
                     clearAuthData();
                     setError(err.response.data);
                 }
@@ -48,7 +46,6 @@ export const AuthProvider = ({ children }) => {
             restAPI.defaults.headers.common[
                 'Authorization'
             ] = `Bearer ${token}`;
-            setEnterDate(new Date().toLocaleString());
         } else {
             navigate('/login', { replace: true });
             delete restAPI.defaults.headers.common['Authorization'];
@@ -84,7 +81,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ token, login, signup, clearAuthData, error, enterDate }}
+            value={{ token, login, signup, clearAuthData, error }}
         >
             {children}
         </AuthContext.Provider>

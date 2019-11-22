@@ -6,6 +6,8 @@ import Header from '../../components/Header';
 import BackDrop from '../../UIcomponents/Backdrop';
 
 import classes from './MainLayout.module.css';
+
+
 const MainLayout = () => {
     const { clearAuthData } = useContext(AuthContext);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -26,5 +28,9 @@ const MainLayout = () => {
         </>
     );
 };
+
+
+
+
 
 export default React.memo(MainLayout);

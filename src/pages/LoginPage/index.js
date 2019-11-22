@@ -3,7 +3,7 @@ import LoginForm from '../../components/LoginForm';
 
 import styles from './LoginPage.module.css';
 
-const LoginPage = props => {
+const LoginPage = ({ navigate }) => {
     return (
         <div className={styles.container}>
             <LoginForm />

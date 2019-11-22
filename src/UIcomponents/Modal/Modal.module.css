@@ -1,0 +1,15 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalOpen {
+    display: flex;
+    flex-flow: column wrap;
+}
