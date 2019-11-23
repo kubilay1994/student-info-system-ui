@@ -4,10 +4,12 @@ import classes from './Modal.module.css';
 
 const Modal = ({ open, onClose, children }) => {
     return (
-        <div className={`${classes.modal} ${open && classes.modalOpen}`}>
-            <BackDrop onBackdropClick={onClose} open={open} />
-            {children}
-        </div>
+        open && (
+            <div className={classes.modal}>
+                <BackDrop onBackdropClick={onClose} open={open} />
+                {children}
+            </div>
+        )
     );
 };
 

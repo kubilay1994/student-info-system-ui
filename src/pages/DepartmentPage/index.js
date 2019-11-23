@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 
 import { Formik, Form, Field } from 'formik';
 import FormInput from '../../UIcomponents/FormInput';
@@ -7,89 +7,68 @@ import Modal from '../../UIcomponents/Modal';
 
 import * as Yup from 'yup';
 
-import restAPI from '../../axios-instances';
 import classes from './Department.module.css';
-import DepartmentList from './DepartmentList';
+import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+
+import { useDispatch, useSelector } from '../../store';
+
+import {
+    addDepartment,
+    deleteDep,
+    fetchDeps,
+    updateDep
+} from '../../store/actions/department';
 
 const schema = Yup.object().shape({
     title: Yup.string().required('Departman ismi zorunludur'),
     departmentCode: Yup.string().required('Departman kodu girilmesi zorunludur')
 });
 
+const depSelector = state => state.department.deps;
+
 const DepartmentPage = () => {
-    const [departments, setDepartments] = useState(null);
     const [selectedDep, setSelectedDep] = useState(null);
-    const [deletedDepId, setDeletedDepId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const markedDepId = useRef(null);
+
+    const deps = useSelector(depSelector);
+    const dispatch = useCallback(useDispatch(), []);
 
     const handleDepartmentCreate = (title, departmentCode) => {
-        return restAPI
-            .post('/api/rest/admin/departments', {
-                title,
-                departmentCode
-            })
-            .then(res =>
-                setDepartments(departments => [...departments, res.data])
-            );
+        return dispatch(addDepartment(title, departmentCode));
     };
 
-    const handleDepartmentUpdate = async (id, title, departmentCode) => {
-        await restAPI.put(`/api/rest/admin/departments/${id}`, {
-            title,
-            departmentCode
-        });
-        setDepartments(deps =>
-            deps.map(dep =>
-                dep.id === id ? { ...dep, title, departmentCode } : dep
-            )
-        );
+    const handleDepartmentUpdate = dep => {
         setSelectedDep(null);
+        return dispatch(updateDep(dep));
     };
 
-    const onSubmit = async (
-        { departmentCode, title },
-        { setSubmitting, resetForm }
-    ) => {
-        setSubmitting(true);
+    const onSubmit = async ({ departmentCode, title }, { resetForm }) => {
         try {
             if (selectedDep) {
-                await handleDepartmentUpdate(
-                    selectedDep.id,
+                await handleDepartmentUpdate({
+                    id: selectedDep.id,
                     title,
                     departmentCode
-                );
+                });
             } else {
                 await handleDepartmentCreate(title, departmentCode);
             }
         } catch (error) {
             console.log(error.message);
         } finally {
-            setSubmitting(false);
             resetForm();
         }
     };
 
-    const handleDepartmentDelete = async id => {
-        try {
-            setIsModalOpen(false);
-            await restAPI.delete(`/api/rest/admin/departments/${id}`);
-            setDepartments(deps => deps.filter(dep => dep.id !== id));
-        } catch (error) {
-            console.log(error);
-        }
+    const handleDepartmentDelete = async () => {
+        setIsModalOpen(false);
+        dispatch(deleteDep(markedDepId.current));
     };
 
     useEffect(() => {
-        const fetchDepartments = async () => {
-            try {
-                const res = await restAPI.get('/api/rest/admin/departments');
-                setDepartments(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchDepartments();
-    }, []);
+        dispatch(fetchDeps());
+    }, [dispatch]);
 
     return (
         <div className={classes.container}>
@@ -102,13 +81,13 @@ const DepartmentPage = () => {
                     <div className={classes.modalButtons}>
                         <Button
                             color="turkuaz"
-                            onClick={() => handleDepartmentDelete(deletedDepId)}
+                            onClick={() => handleDepartmentDelete(markedDepId)}
                         >
                             Evet
                         </Button>
                         <Button
                             color="red"
-                            onClick={id => {
+                            onClick={() => {
                                 setIsModalOpen(false);
                             }}
                         >
@@ -117,16 +96,36 @@ const DepartmentPage = () => {
                     </div>
                 </div>
             </Modal>
-            {departments ? (
-                <DepartmentList
-                    departments={departments}
-                    onDepDelete={id => {
-                        setDeletedDepId(id);
-                        setIsModalOpen(true);
-                    }}
-                    onDepSelect={setSelectedDep}
-                    onDepUnselect={() => setSelectedDep(null)}
-                />
+
+            {deps ? (
+                <ul className={classes.departmentList}>
+                    <FaPlus
+                        size={20}
+                        className={`${classes.icon} ${classes.add}`}
+                        onClick={() => setSelectedDep(null)}
+                    />
+                    {deps.map(dep => (
+                        <li key={dep.id}>
+                            {dep.title}
+                            <div className={classes.icons}>
+                                <FaEdit
+                                    size={20}
+                                    className={classes.icon}
+                                    onClick={() => setSelectedDep(dep)}
+                                />
+                                <FaTrash
+                                    color="crimson"
+                                    size={20}
+                                    className={classes.icon}
+                                    onClick={() => {
+                                        setIsModalOpen(true);
+                                        markedDepId.current = dep.id;
+                                    }}
+                                />
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             ) : (
                 <div>Loading ... </div>
             )}

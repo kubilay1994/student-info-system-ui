@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { FormInput, Button, Select } from '../../UIcomponents';
 
 import classes from './CoursePage.module.css';
-import restAPI from '../../axios-instances';
+
+import { useDispatch, useSelector } from '../../store';
+import { fetchCourses, addCourse } from '../../store/actions/course';
 
 const languages = [
     { value: 'Türkçe', label: 'Türkçe' },
@@ -29,26 +31,29 @@ const schema = Yup.object().shape({
     title: Yup.string().required()
 });
 
+const coursesSelector = state => state.course.courses;
+
 const CoursePage = () => {
-    const [courses] = useState([
-        { value: 'Hello', label: 'Hello' },
-        { value: 'Kello', label: 'Kello' },
-        { value: 'Dello', label: 'Dello' },
-        { value: 'Fello', label: 'Fello' },
-        { value: 'Gello', label: 'Gello' },
-        { value: 'Lello', label: 'Lello' },
-        { value: 'Nello', label: 'Nello' }
-    ]);
+    const courses = useSelector(coursesSelector);
+    const dispatch = useCallback(useDispatch(), []);
+
+    // might be expensive consider useMemo later on
+    const courseOptions = courses.map(({ courseCode }) => ({
+        value: courseCode,
+        label: courseCode
+    }));
+
+    useEffect(() => {
+        dispatch(fetchCourses());
+    }, [dispatch]);
 
     const onSubmit = async (values, { resetForm }) => {
-        console.log(values);
         try {
-            const res = await restAPI.post('/api/rest/admin/courses', values);
-            console.log(res);
+            await dispatch(addCourse(values));
         } catch (error) {
             console.log(error.message);
         }
-        resetForm();
+        // resetForm();
     };
 
     return (
@@ -58,7 +63,7 @@ const CoursePage = () => {
                 courseCode: '',
                 title: '',
                 prerequisites: [],
-                credit: '',
+                credit: 0,
                 language: 'Türkçe'
             }}
             validationSchema={schema}
@@ -89,7 +94,7 @@ const CoursePage = () => {
                         name="prerequisites"
                         label="Ön koşul dersleri"
                         component={Select}
-                        options={courses}
+                        options={courseOptions}
                         containerClass={classes.center}
                         multiple
                         size="3"
@@ -98,7 +103,7 @@ const CoursePage = () => {
                         name="credit"
                         component={FormInput}
                         label="Dersin kredisi*"
-                        type="text"
+                        type="number"
                     />
                     <Field
                         name="language"
@@ -107,24 +112,6 @@ const CoursePage = () => {
                         options={languages}
                         containerClass={classes.center}
                     />
-                    {/* <Field
-                        name="goal"
-                        component={FormInput}
-                        componentType="textarea"
-                        label="Dersin amacı"
-                        placeholder="Maximum 500 karakter"
-                        rows="4"
-                        cols="4"
-                    />
-                    <Field
-                        name="description"
-                        component={FormInput}
-                        componentType="textarea"
-                        label="Dersin tanımı"
-                        placeholder="Maximum 500 karakter"
-                        rows="4"
-                        cols="4"
-                    /> */}
                     <Button
                         type="submit"
                         disabled={isSubmitting}

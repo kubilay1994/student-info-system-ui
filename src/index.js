@@ -6,10 +6,23 @@ import * as serviceWorker from './serviceWorker';
 
 import { AuthProvider } from './context/auth-context';
 
+import { Provider, createStore, combineReducers } from './store';
+import depReducer from './store/reducers/department';
+import courseReducer from './store/reducers/course';
+
+const store = createStore(
+    combineReducers({
+        department: depReducer,
+        course: courseReducer
+    })
+);
+
 const StudentInfoApp = () => (
-    <AuthProvider>
-        <App />
-    </AuthProvider>
+    <Provider store={store}>
+        <AuthProvider>
+            <App />
+        </AuthProvider>
+    </Provider>
 );
 ReactDOM.render(<StudentInfoApp />, document.getElementById('root'));
 

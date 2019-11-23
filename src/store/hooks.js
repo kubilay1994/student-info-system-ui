@@ -30,10 +30,9 @@ export const useSelector = (selector, equalityFn = strictEqual) => {
     });
 
     useEffect(() => {
-        let { listeners } = store;
-        listeners.push(listener);
+        store.listeners.push(listener);
         return () => {
-            listeners = listeners.filter(li => li !== listener);
+            store.listeners = store.listeners.filter(li => li !== listener);
         };
     }, [store, listener]);
 
@@ -42,7 +41,13 @@ export const useSelector = (selector, equalityFn = strictEqual) => {
 
 export const useDispatch = () => {
     const store = useContext(StoreContext);
-    return action => store.dispatch(action);
+
+    return function dispatch(action) {
+        if (typeof action === 'function') {
+            return action(dispatch, store.state);
+        }
+        store.dispatch(action);
+    };
 };
 
 const strictEqual = (a, b) => a === b;

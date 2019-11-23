@@ -44,8 +44,40 @@
 }
 
 .modalButtons button {
-    margin : 1rem;
+    margin: 1rem;
     width: 30%;
+}
+
+.departmentList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.departmentList > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: whitesmoke;
+    border-radius: 1rem;
+}
+
+.icon {
+    margin: 0 0.2rem;
+}
+.icon:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.icons {
+    display: flex;
+}
+
+.add {
+    margin: 1rem auto;
 }
 
 @media (min-width: 40rem) {
@@ -58,5 +90,8 @@
     .form {
         width: 30%;
         max-width: 22rem;
+    }
+    .departmentList > li {
+        width: 22rem;
     }
 }
