@@ -38,10 +38,8 @@
 .red {
     background: crimson;
     border: 1px solid crimson;
-    color : white;
+    color: white;
 }
-
-
 
 .outline-blue {
     background: whitesmoke;
@@ -51,6 +49,7 @@
 .outline-blue:hover,
 .outline-blue:focus,
 .outline-blue:active {
+    filter: none;
     background: #3fc1c9;
     color: whitesmoke;
 }
@@ -58,7 +57,6 @@
 .turkuaz {
     background: #349ca1;
 }
-
 
 .btn:disabled {
     background: #949393;

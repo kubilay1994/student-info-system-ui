@@ -53,7 +53,7 @@ const CoursePage = () => {
         } catch (error) {
             console.log(error.message);
         }
-        // resetForm();
+        resetForm();
     };
 
     return (

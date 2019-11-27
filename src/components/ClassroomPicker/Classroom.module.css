@@ -1,0 +1,67 @@
+.label {
+    margin: 0.5rem;
+}
+
+.hourPicker {
+    padding: 0.3rem;
+    margin: 0.25rem;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, 0.3);
+}
+
+.hourPicker:focus {
+    outline: none;
+}
+
+.icon {
+    margin: 0.2rem;
+}
+
+.icon:hover,
+.icon:focus,
+.icon:active {
+    opacity: 0.4;
+}
+
+.row {
+    padding: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.picker {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.formInput {
+    width: 50%;
+    margin: auto;
+}
+
+.pickerContainer {
+    width: 80%;
+    max-height: 20rem;
+
+    box-shadow: inset 0px 0px 2px 2px #eaeaea;
+    margin: 2rem;
+    display: flex;
+    overflow-y: auto;
+}
+
+.title {
+    margin: 0;
+    padding-top: 1rem;
+}
+
+.minus {
+    align-self: center;
+}
+@media (min-width: 40rem) {
+    .pickerContainer {
+        width: 70%;
+    }
+}

@@ -11,12 +11,14 @@ const Select = ({
     options,
     label,
     containerClass,
+    selectClass,
     placeholder,
     ...rest
 }) => {
     const selectClasses = combineCLasses({
-        [classes.errorSelect]: touched[field.name] && errors[field.name],
-        [classes.select]: true
+        [classes.select]: true,
+        [selectClass]: selectClass || null,
+        [classes.errorSelect]: touched[field.name] && errors[field.name]
     });
 
     const containerClasses = combineCLasses({
@@ -27,9 +29,9 @@ const Select = ({
     return (
         options && (
             <div className={containerClasses}>
-                <label className={classes.label}>{label}</label>
+                {label && <label className={classes.label}>{label}</label>}
                 <select className={selectClasses} {...field} {...rest}>
-                    {placeholder && <option>{placeholder}</option>}
+                    {placeholder && <option value="">{placeholder}</option>}
                     {options.map(op => (
                         <option value={op.value} key={op.value}>
                             {op.label}

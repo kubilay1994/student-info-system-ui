@@ -97,7 +97,7 @@ const DepartmentPage = () => {
                 </div>
             </Modal>
 
-            {deps ? (
+            {deps && deps.length > 0 && (
                 <ul className={classes.departmentList}>
                     <FaPlus
                         size={20}
@@ -126,8 +126,6 @@ const DepartmentPage = () => {
                         </li>
                     ))}
                 </ul>
-            ) : (
-                <div>Loading ... </div>
             )}
 
             <Formik
