@@ -1,4 +1,4 @@
-import CoursePage from './CoursePage';
+import CoursePage from '../components/CourseList';
 import DepartmentPage from './DepartmentPage';
 import LoginPage from './LoginPage';
 import NotFound from './NotFound';

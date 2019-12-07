@@ -7,13 +7,15 @@ import * as serviceWorker from './serviceWorker';
 import { AuthProvider } from './context/auth-context';
 
 import { Provider, createStore, combineReducers } from './store';
-import depReducer from './store/reducers/department';
 import courseReducer from './store/reducers/course';
+import classroomReducer from './store/reducers/classroom';
+import sectionRecuder from './store/reducers/section';
 
 const store = createStore(
     combineReducers({
-        department: depReducer,
-        course: courseReducer
+        course: courseReducer,
+        classroom: classroomReducer,
+        section: sectionRecuder
     })
 );
 

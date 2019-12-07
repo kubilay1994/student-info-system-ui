@@ -64,9 +64,7 @@ const LoginForm = props => {
                 >
                     <header>
                         <img src={logo} className={classes.logo} alt="Logo" />
-                        <h3>
-                            YILDIZ TEKNİK ÜNİVERSİTESİ ÖĞRENCİ BİLGİ SİSTEMİ
-                        </h3>
+                        <h3>YTÜ BİLGİSAYAR MÜHENDİSLİĞİ BİLGİ SİSTEMİ</h3>
                     </header>
 
                     {AuthError && (

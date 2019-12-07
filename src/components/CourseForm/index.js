@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { FormInput, Button, Select } from '../../UIcomponents';
 
-import classes from './CoursePage.module.css';
+import classes from './CourseForm.module.css';
 
-import { useDispatch, useSelector } from '../../store';
-import { fetchCourses, addCourse } from '../../store/actions/course';
+import { useDispatch } from '../../store';
+import { addCourse, updateCourse } from '../../store/actions/course';
 
 const languages = [
     { value: 'Türkçe', label: 'Türkçe' },
@@ -16,68 +16,66 @@ const languages = [
 
 const schema = Yup.object().shape({
     courseCode: Yup.string().required('Ders kodu zorunludur'),
-    // prerequisite :
     credit: Yup.number()
         .required('Dersin kredisinin girilmesi zorunludur')
         .integer('Lütfen tamsayı giriniz'),
     language: Yup.string()
         .oneOf(['Türkçe', 'İngilizce'])
         .required(),
-    // goal: Yup.string().max(500, 'Maksimum 500 karakter'),
-    // description: Yup.string().max(500, 'Maksimum 500 karakter')
-    departmentCode: Yup.string()
-        .max(3)
-        .required(),
     title: Yup.string().required()
 });
 
-const coursesSelector = state => state.course.courses;
+const CourseForm = ({ courses, navigate, location }) => {
+    const dispatch = useDispatch();
+    const { editedCourse } = location.state;
 
-const CoursePage = () => {
-    const courses = useSelector(coursesSelector);
-    const dispatch = useCallback(useDispatch(), []);
+    const editMode = !!editedCourse;
 
     // might be expensive consider useMemo later on
-    const courseOptions = courses.map(({ courseCode }) => ({
+    const courseOptions = courses.map(({ courseCode, title }) => ({
         value: courseCode,
-        label: courseCode
+        label: title
     }));
 
-    useEffect(() => {
-        dispatch(fetchCourses());
-    }, [dispatch]);
-
     const onSubmit = async (values, { resetForm }) => {
+        console.log(values);
         try {
-            await dispatch(addCourse(values));
+            if (editMode) {
+                await dispatch(updateCourse(values));
+                resetForm({ values });
+            } else {
+                await dispatch(addCourse(values));
+                resetForm();
+            }
         } catch (error) {
             console.log(error.message);
+            console.log(error.request);
+            console.log(error.response);
         }
-        resetForm();
+    };
+
+    const initialValues = {
+        departmentCode: 'BLM',
+        courseCode: '',
+        title: '',
+        prerequisites: [],
+        credit: 0,
+        language: 'Türkçe'
     };
 
     return (
         <Formik
-            initialValues={{
-                departmentCode: '',
-                courseCode: '',
-                title: '',
-                prerequisites: [],
-                credit: 0,
-                language: 'Türkçe'
-            }}
+            initialValues={editedCourse || initialValues}
             validationSchema={schema}
             onSubmit={onSubmit}
         >
             {({ isSubmitting }) => (
                 <Form className={classes.container}>
-                    <h2 className={classes.center}>DEPARTMAN DERS EKLEME</h2>
-                    <Field
-                        name="departmentCode"
-                        component={FormInput}
-                        type="text"
-                        label="Departman kodu*"
-                    />
+                    <h2 className={classes.center}>
+                        BİLGİSAYAR MÜDENDİSLİĞİ DERS
+                        {editMode ? ' GÜNCELLEME' : ' EKLEME'} EKRANI
+                    </h2>
+
                     <Field
                         name="courseCode"
                         component={FormInput}
@@ -95,7 +93,7 @@ const CoursePage = () => {
                         label="Ön koşul dersleri"
                         component={Select}
                         options={courseOptions}
-                        containerClass={classes.center}
+                        containerClass={`${classes.center} ${classes.select}`}
                         multiple
                         size="3"
                     />
@@ -104,6 +102,7 @@ const CoursePage = () => {
                         component={FormInput}
                         label="Dersin kredisi*"
                         type="number"
+                        inputClass={classes.courseNumInput}
                     />
                     <Field
                         name="language"
@@ -112,17 +111,28 @@ const CoursePage = () => {
                         options={languages}
                         containerClass={classes.center}
                     />
-                    <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        btnCLass={classes.btn}
-                    >
-                        Kaydet
-                    </Button>
+                    <div className={classes.btnContainer}>
+                        <Button
+                            type="submit"
+                            disabled={isSubmitting}
+                            btnCLass={classes.btn}
+                            color="outline-blue"
+                        >
+                            {editMode ? 'Güncelle' : 'Kaydet'}
+                        </Button>
+                        <Button
+                            type="button"
+                            btnCLass={classes.btn}
+                            onClick={() => navigate('/admin/courses')}
+                            color="outline-red"
+                        >
+                            Geri
+                        </Button>
+                    </div>
                 </Form>
             )}
         </Formik>
     );
 };
 
-export default CoursePage;
+export default CourseForm;

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { format } from 'date-fns';
 
 import DatePicker from 'react-datepicker';
@@ -9,17 +9,14 @@ import * as Yup from 'yup';
 
 import ClassroomPicker from '../ClassroomPicker';
 
-import restAPI from '../../axios-instances';
-
 import { Button, Select, FormInput } from '../../UIcomponents';
 import classes from './SectionForm.module.css';
 import { useSelector, useDispatch } from '../../store';
-import { fetchCourses } from '../../store/actions/course';
-import { fetchDeps } from '../../store/actions/department';
+import { addSection } from '../../store/actions/section';
 
 const schema = Yup.object().shape({
-    sectionCode: Yup.string().required('Grup kodu zorunludur'),
-    department: Yup.string().required('Lütfen departman seçiniz'),
+    sectionNumber: Yup.number().required('Grup kodu zorunludur'),
+    course: Yup.string().required('Lütfen ders seçiniz'),
     sectionClassrooms: Yup.array()
         .of(
             Yup.object().shape({
@@ -32,35 +29,25 @@ const schema = Yup.object().shape({
 });
 
 const coursesSelector = state => state.course.courses;
-const depsSelector = state => state.department.deps;
 
-const SectionForm = () => {
+const SectionForm = ({ location, navigate }) => {
     const courses = useSelector(coursesSelector);
-    const deps = useSelector(depsSelector);
-
     const dispatch = useCallback(useDispatch(), []);
-
-    useEffect(() => {
-        dispatch(fetchCourses());
-        dispatch(fetchDeps());
-    }, [dispatch]);
-
-    const depOpts = deps
-        ? deps.map(dep => ({ value: dep.departmentCode, label: dep.title }))
-        : [];
 
     const courseOpts = courses.map(course => ({
         value: course.courseCode,
         label: course.title
     }));
 
+    const { editedSection } = location.state;
+    const editMode = !!editedSection;
+
     const instOpts = [{ value: '99011001', label: 'M Utku Kalay' }];
 
     const onSubmit = async (values, { resetForm }) => {
         const body = {
-            sectionCode: values.sectionCode,
+            sectionCode: `GR-${values.sectionNumber}`,
             courseCode: values.course,
-            departmentCode: values.department,
             instructorCode: values.instructor,
             sectionClassrooms: values.sectionClassrooms.map(item => ({
                 ...item,
@@ -71,20 +58,19 @@ const SectionForm = () => {
             finishDate: format(values.finishDate, 'dd/MM/yyyy')
         };
         try {
-            await restAPI.post('/api/rest/admin/sections', body);
+            await dispatch(addSection(body));
         } catch (error) {
             console.log(error.message);
         } finally {
-            // resetForm();
-            console.log(body);
+            resetForm();
+            // navigate('/admin/sections');
         }
     };
 
     return (
         <Formik
             initialValues={{
-                sectionCode: '',
-                department: '',
+                sectionNumber: '',
                 course: '',
                 instructor: '',
                 startDate: new Date(),
@@ -99,37 +85,33 @@ const SectionForm = () => {
                 isSubmitting,
                 dirty,
                 setFieldValue,
-                values: { department, startDate, finishDate }
+                values: { course, startDate, finishDate }
             }) => (
                 <Form className={classes.form}>
                     <h2>Ders Grubu Oluşturma Ekranı</h2>
 
                     <Field
-                        name="sectionCode"
-                        component={FormInput}
-                        label="SectionCode"
-                        placeholder="Lütfen grup kodunu giriniz"
-                    />
-                    <Field
-                        name="department"
+                        name="course"
                         component={Select}
-                        options={depOpts}
-                        label="Departman"
-                        placeholder="Lütfen departman seçiniz"
+                        options={courseOpts}
+                        label="Ders"
+                        placeholder="Lütfen ders seçiniz"
                         containerClass={classes.formSelectContainer}
                         selectClass={classes.formSelect}
+                        disabled={editMode}
                     />
-                    {department && (
+                    {course && (
                         <>
                             <Field
-                                name="course"
-                                component={Select}
-                                options={courseOpts}
-                                label="Ders"
-                                placeholder="Lütfen ders seçiniz"
-                                containerClass={classes.formSelectContainer}
-                                selectClass={classes.formSelect}
+                                name="sectionNumber"
+                                component={FormInput}
+                                label="Grup Numarası"
+                                type="number"
+                                placeholder="Lütfen grup numarasını giriniz"
+                                containerClass={classes.input}
+                                inputClass={classes.numInput}
                             />
+
                             <Field
                                 name="instructor"
                                 component={Select}
@@ -140,7 +122,7 @@ const SectionForm = () => {
                                 selectClass={classes.formSelect}
                             />
 
-                            <div>
+                            <div className={classes.timePickerContainer}>
                                 <div className={classes.dateContainer}>
                                     <label className={classes.label}>
                                         Ders Grubu başlangıç tarihi
@@ -174,13 +156,23 @@ const SectionForm = () => {
                             />
                         </>
                     )}
-                    <Button
-                        type="submit"
-                        disabled={!dirty || isSubmitting || !isValid}
-                        btnCLass={classes.formButton}
-                    >
-                        Kaydet
-                    </Button>
+                    <div className={classes.buttonContainer}>
+                        <Button
+                            type="submit"
+                            disabled={!dirty || isSubmitting || !isValid}
+                            btnCLass={classes.formButton}
+                        >
+                            Kaydet
+                        </Button>
+                        <Button
+                            type="button"
+                            onClick={() => navigate('/admin/sections')}
+                            color="outline-red"
+                            btnCLass={classes.formButton}
+                        >
+                            Geri
+                        </Button>
+                    </div>
                 </Form>
             )}
         </Formik>

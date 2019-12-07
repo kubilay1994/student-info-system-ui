@@ -6,19 +6,8 @@ import { FaCaretLeft } from 'react-icons/fa';
 import classes from './Dropdown.module.css';
 // import { combineCLasses } from '../../utils/classnames';
 
-const Dropdown = ({ isActive, headerData, itemData }) => {
+const Dropdown = ({ isActive, headerData, itemData, onLinkClicked }) => {
     const { HeaderIcon } = headerData;
-    // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    // const handleDropdownOpen = event => {
-    //     event.stopPropagation();
-    //     setIsDropdownOpen(prev => !prev);
-    // };
-
-    // const dropdownClasses = combineCLasses({
-    //     [classes.dropDownHeader]: true,
-    //     [classes.open]: isDropdownOpen
-    // });
 
     return (
         <li className={classes.dropDownHeader}>
@@ -36,13 +25,18 @@ const Dropdown = ({ isActive, headerData, itemData }) => {
                                 headerData={dropdown.headerData}
                                 itemData={dropdown.itemData}
                                 key={id}
+                                onLinkClicked={onLinkClicked}
                             />
                         );
                     }
 
                     return (
                         <li key={id}>
-                            <Link to={path} getProps={isActive}>
+                            <Link
+                                to={path}
+                                getProps={isActive}
+                                onClick={onLinkClicked}
+                            >
                                 <Icon className={classes.icon} size={20} />
                                 {title}
                             </Link>

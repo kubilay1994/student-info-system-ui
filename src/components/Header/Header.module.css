@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0.5rem;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     position: fixed;
     top: 0;
     left: 0;
@@ -14,16 +14,18 @@
     height: 4rem;
 }
 
+/* .headerItem {
+    margin: auto;
+} */
+
 .headerItem {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    display: none;
 }
 
 .menuIcon {
     display: flex;
     align-items: center;
     margin-left: 0.5rem;
-    margin-right: 0.5rem;
     padding: 0.3rem;
     background: burlywood;
 }
@@ -31,3 +33,15 @@
     background: chocolate;
 }
 
+@media (min-width: 40rem) {
+    .headerItem {
+        font-style: italic;
+        font-weight: bold;
+        text-align: center;
+        color: #46a;
+        display: initial;
+        margin : auto;
+        padding-right: 4.5rem;
+        font-size: 1.75rem;
+    }
+}

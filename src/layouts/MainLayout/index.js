@@ -7,13 +7,16 @@ import BackDrop from '../../UIcomponents/Backdrop';
 
 import classes from './MainLayout.module.css';
 
-
 const MainLayout = () => {
     const { clearAuthData } = useContext(AuthContext);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const LogoutHandler = () => {
         clearAuthData();
+    };
+
+    const handleLinkClicked = () => {
+        setIsSidebarOpen(false);
     };
 
     return (
@@ -23,14 +26,14 @@ const MainLayout = () => {
                 open={isSidebarOpen}
                 onBackdropClick={() => setIsSidebarOpen(false)}
             />
-            <Sidebar onLogout={LogoutHandler} open={isSidebarOpen}></Sidebar>
+            <Sidebar
+                onLogout={LogoutHandler}
+                open={isSidebarOpen}
+                onLinkClicked={handleLinkClicked}
+            />
             <div className={classes.h} />
         </>
     );
 };
-
-
-
-
 
 export default React.memo(MainLayout);

@@ -1,13 +1,15 @@
 .formButton {
-    width: 30%;
     margin: 1rem;
 }
 
 .form {
     display: flex;
-    flex-flow: column wrap;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+}
+
+.form h2 {
+    text-align: center;
 }
 
 .formSelectContainer {
@@ -42,8 +44,35 @@
     text-align: center;
 }
 
+.input {
+    margin: 0.5rem;
+}
+
+.numInput {
+    width: 100%;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-evenly;
+    width: 50%;
+}
+
 @media (min-width: 40rem) {
     .formSelectContainer {
         width: 20rem;
+    }
+    .timePickerContainer {
+        display: flex;
+        margin: 1rem;
+    }
+
+    .buttonContainer {
+        flex-direction: row;
+    }
+
+    .formButton {
+        width: 35%;
     }
 }

@@ -24,12 +24,11 @@
     position: relative;
 }
 
-.dropDownHeader:hover .caretIcon,
-.dropDownHeader:focus .caretIcon,
-.dropDownHeader:active .caretIcon {
+.dropDownHeader:hover > a > .caretIcon,
+.dropDownHeader:focus > a > .caretIcon,
+.dropDownHeader:active > a > .caretIcon {
     transform: rotate(-90deg);
 }
-
 
 .dropDownHeader:hover > ul,
 .dropDownHeader:focus > ul,
@@ -37,15 +36,6 @@
     max-height: 500px;
     transition: max-height 0.7s ease-in;
 }
-
-/* .open > a > .caretIcon {
-    transform: rotate(-90deg);
-}
-
-.open > ul {
-    max-height: 500px;
-    transition: max-height 0.7s ease-in;
-} */
 
 .caretIcon {
     margin-left: auto;
@@ -64,8 +54,6 @@
         left: 100%;
         width: fit-content;
         min-width: 15rem;
-        overflow: visible;
-        transition: all 0.3s ease-out;
     }
 
     .dropdownMenu > li > a {
@@ -79,11 +67,5 @@
     .dropDownHeader:focus > ul,
     .dropDownHeader:active > ul {
         display: flex;
-        padding: 0;
     }
-
-    /* .open > ul {
-        display: flex;
-        padding: 0;
-    } */
-} 
+}

@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.tableContainer {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    overflow: auto;
+    max-width: 90%;
+}
+
+.tableContainer table {
+    width: 100%;
+}
+
+.title {
+    text-align: center;
+}
+
+.icon:hover,
+.icon:focus,
+.icon:active {
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.iconContainer {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.iconLabel {
+    font-weight: bold;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0 0.5rem;
+}
+
+.list {
+    border-collapse: collapse;
+}
+
+.list tr {
+    border-bottom: 1px solid black;
+}
+
+.list tr:nth-child(even) {
+    background: #abc;
+}
+
+.row {
+    display: flex;
+}
+
+.modalBox {
+    background: white;
+    border: 1px solid black;
+    box-shadow: 1px 1px 3px 4px #ccc;
+    z-index: 100;
+    padding: 3rem;
+}
+
+.modalBox h4 {
+    text-align: center;
+    width: 70%;
+    margin: auto;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.modalButtons button {
+    margin: 1rem;
+    width: 30%;
+}

@@ -1,0 +1,8 @@
+.courseList td,
+.courseList th {
+    padding: 0.75rem;
+    text-align: center;
+}
+.icons {
+    display: flex;
+}

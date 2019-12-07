@@ -13,7 +13,9 @@ const Header = ({ onSidebarOpen }) => {
                     cursor="pointer"
                 />
             </div>
-            <div className={classes.headerItem}>Rest of header</div>
+            <h2 className={classes.headerItem}>
+                YTÜ Bilgisayar Mühendisliği Bilgi Sistemi
+            </h2>
         </header>
     );
 };

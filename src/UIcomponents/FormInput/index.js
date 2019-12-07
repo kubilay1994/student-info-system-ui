@@ -13,6 +13,7 @@ const FormInput = ({
     form: { touched, errors },
     ...rest
 }) => {
+    
     let Component;
     switch (componentType) {
         case 'textarea':

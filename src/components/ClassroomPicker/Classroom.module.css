@@ -31,7 +31,7 @@
 }
 
 .picker {
-    padding: 3rem;
+    padding: 2.5rem;
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -43,13 +43,13 @@
 }
 
 .pickerContainer {
-    width: 80%;
-    max-height: 20rem;
+    width: 85%;
+    max-height: 23rem;
 
     box-shadow: inset 0px 0px 2px 2px #eaeaea;
     margin: 2rem;
     display: flex;
-    overflow-y: auto;
+    overflow: auto;
 }
 
 .title {
@@ -62,6 +62,6 @@
 }
 @media (min-width: 40rem) {
     .pickerContainer {
-        width: 70%;
+        width: 75%;
     }
 }

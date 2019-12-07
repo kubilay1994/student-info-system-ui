@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import classes from './Classroom.module.css';
 import { FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
-import { FormInput, Select } from '../../UIcomponents';
+import { Select } from '../../UIcomponents';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { Field } from 'formik';
+
+import { fetchDepClassrooms } from '../../store/actions/classroom';
+
+import { useDispatch, useSelector } from '../../store';
 
 const dayOptions = [
     'Pazartesi',
@@ -20,9 +24,24 @@ const dayOptions = [
 
 const classTypeOpts = ['Ders', 'Lab'].map(opt => ({ value: opt, label: opt }));
 
-const index = ({ form, push, remove }) => {
+const classroomSelector = state => state.classroom.classrooms;
+
+const ClassroomPicker = ({ form, push, remove }) => {
     const { setFieldValue } = form;
     const { sectionClassrooms } = form.values;
+
+    const dispatch = useCallback(useDispatch(), []);
+    const classrooms = useSelector(classroomSelector);
+
+    const classroommOpts = classrooms.map(c => ({
+        value: c.classroomCode,
+        label: c.classroomCode
+    }));
+
+    useEffect(() => {
+        dispatch(fetchDepClassrooms());
+    }, [dispatch]);
+
     return (
         <>
             <FaPlusCircle
@@ -101,11 +120,10 @@ const index = ({ form, push, remove }) => {
 
                         <Field
                             name={`sectionClassrooms[${index}].classroomCode`}
-                            component={FormInput}
-                            type="text"
+                            component={Select}
                             label="Derslik Adı"
                             placeholder="Derslik kodunu giriniz"
-                            containerClass={classes.formInput}
+                            options={classroommOpts}
                         />
                     </div>
                 ))}
@@ -114,4 +132,4 @@ const index = ({ form, push, remove }) => {
     );
 };
 
-export default index;
+export default ClassroomPicker;

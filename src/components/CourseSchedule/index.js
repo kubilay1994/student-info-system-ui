@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './CourseTable.module.css';
+import classes from './CourseSchedule.module.css';
 
 const hours = [
     '08:00',

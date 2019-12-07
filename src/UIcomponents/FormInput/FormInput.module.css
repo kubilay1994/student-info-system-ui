@@ -1,35 +1,33 @@
 .inputContainer {
     display: flex;
     flex-direction: column;
-    /* width: 80%; */
 }
 
 .formLabel {
-    margin : 0.2rem ;
+    margin: 0.2rem;
     padding: 0.1rem;
     font-size: 0.8rem;
-
 }
 
 .formInput {
-    border : 2px solid rgb(226, 221, 221);
+    border: 2px solid rgb(226, 221, 221);
     border-radius: 10px;
     padding: 0.5rem;
-    background-color: whitesmoke;
     min-height: 1.5rem;
-    font : inherit;
+    font: inherit;
+    text-indent: 4px;
 }
 
 .formInput:focus {
-    outline: none
+    outline: none;
 }
 
-.errorInput  {
-    border : 1.25px solid crimson;
+.errorInput {
+    border: 1.25px solid crimson;
 }
 .error {
     font: inherit;
-    color : crimson;
-    margin : 0.3rem;
-    text-align : center;
+    color: crimson;
+    margin: 0.3rem;
+    text-align: center;
 }
