@@ -3,6 +3,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { FormInput, Button, Select } from '../../UIcomponents';
+import ErrorInfo from '../ErrorInfo';
 
 import classes from './CourseForm.module.css';
 
@@ -37,7 +38,7 @@ const CourseForm = ({ courses, navigate, location }) => {
         label: title
     }));
 
-    const onSubmit = async (values, { resetForm }) => {
+    const onSubmit = async (values, { resetForm, setStatus }) => {
         console.log(values);
         try {
             if (editMode) {
@@ -48,9 +49,9 @@ const CourseForm = ({ courses, navigate, location }) => {
                 resetForm();
             }
         } catch (error) {
-            console.log(error.message);
-            console.log(error.request);
-            console.log(error.response);
+            if (error.response) {
+                setStatus(error.response.data);
+            }
         }
     };
 
@@ -69,13 +70,14 @@ const CourseForm = ({ courses, navigate, location }) => {
             validationSchema={schema}
             onSubmit={onSubmit}
         >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, status }) => (
                 <Form className={classes.container}>
                     <h2 className={classes.center}>
                         BİLGİSAYAR MÜDENDİSLİĞİ DERS
                         {editMode ? ' GÜNCELLEME' : ' EKLEME'} EKRANI
                     </h2>
 
+                    <ErrorInfo message={status} />
                     <Field
                         name="courseCode"
                         component={FormInput}
@@ -103,6 +105,7 @@ const CourseForm = ({ courses, navigate, location }) => {
                         label="Dersin kredisi*"
                         type="number"
                         inputClass={classes.courseNumInput}
+                        min="0"
                     />
                     <Field
                         name="language"

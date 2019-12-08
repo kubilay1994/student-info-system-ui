@@ -32,14 +32,12 @@ export const updateCourse = course => async dispatch => {
             `${adminCoursePath}/${course.id}`,
             course
         );
-        console.log(res);
-        dispatch({ type: UPDATE_COURSE, course });
+        dispatch({ type: UPDATE_COURSE, course: res.data });
     } catch (error) {
         console.log(error);
     }
 };
 export const addCourse = course => async dispatch => {
     const res = await restAPI.post(adminCoursePath, course);
-    console.log(res);
     dispatch({ type: ADD_COURSE, course: res.data });
 };

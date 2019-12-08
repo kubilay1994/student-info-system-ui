@@ -8,6 +8,7 @@ import { Formik, Field, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
 
 import ClassroomPicker from '../ClassroomPicker';
+import ErrorInfo from '../ErrorInfo';
 
 import { Button, Select, FormInput } from '../../UIcomponents';
 import classes from './SectionForm.module.css';
@@ -44,7 +45,7 @@ const SectionForm = ({ location, navigate }) => {
 
     const instOpts = [{ value: '99011001', label: 'M Utku Kalay' }];
 
-    const onSubmit = async (values, { resetForm }) => {
+    const onSubmit = async (values, { resetForm, setStatus }) => {
         const body = {
             sectionCode: `GR-${values.sectionNumber}`,
             courseCode: values.course,
@@ -59,11 +60,12 @@ const SectionForm = ({ location, navigate }) => {
         };
         try {
             await dispatch(addSection(body));
-        } catch (error) {
-            console.log(error.message);
-        } finally {
             resetForm();
-            // navigate('/admin/sections');
+        } catch (error) {
+            resetForm();
+            if (error.response) {
+                setStatus(error.response.data);
+            }
         }
     };
 
@@ -82,6 +84,7 @@ const SectionForm = ({ location, navigate }) => {
         >
             {({
                 isValid,
+                status,
                 isSubmitting,
                 dirty,
                 setFieldValue,
@@ -89,7 +92,7 @@ const SectionForm = ({ location, navigate }) => {
             }) => (
                 <Form className={classes.form}>
                     <h2>Ders Grubu Oluşturma Ekranı</h2>
-
+                    <ErrorInfo message={status} />
                     <Field
                         name="course"
                         component={Select}
@@ -110,6 +113,7 @@ const SectionForm = ({ location, navigate }) => {
                                 placeholder="Lütfen grup numarasını giriniz"
                                 containerClass={classes.input}
                                 inputClass={classes.numInput}
+                                min="0"
                             />
 
                             <Field

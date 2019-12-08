@@ -38,10 +38,8 @@ header > h3 {
 }
 
 .error {
-    font: inherit;
     color: crimson;
     margin: 0.3rem;
-    text-align: center;
     text-align: center;
 }
 
@@ -52,7 +50,6 @@ header > h3 {
 .loginInputContainer {
     width: 80%;
 }
-
 
 @media (min-width: 40rem) {
     .reCaptcha {

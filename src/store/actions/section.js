@@ -19,7 +19,7 @@ export const fetchAllSections = () => async dispatch => {
 
 export const addSection = section => async dispatch => {
     const res = await restAPI.post(adminSectionPath, section);
-    dispatch({ type: ADD_SECTION, section });
+    dispatch({ type: ADD_SECTION, section: res.data });
 };
 
 export const updateSection = section => async dispatch => {
@@ -28,7 +28,7 @@ export const updateSection = section => async dispatch => {
             `${adminSectionPath}/${section.id}`,
             section
         );
-        dispatch({ type: UPDATE_SECTION, section });
+        dispatch({ type: UPDATE_SECTION, section: res.data });
     } catch (error) {
         console.log(error);
     }
@@ -40,7 +40,5 @@ export const deleteSection = id => async dispatch => {
         dispatch({ type: DELETE_SECTION, id });
     } catch (error) {
         console.log(error.message);
-        console.log(error.request);
-        console.log(error.response);
     }
 };

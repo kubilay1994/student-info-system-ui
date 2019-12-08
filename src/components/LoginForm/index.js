@@ -51,12 +51,7 @@ const LoginForm = props => {
                 }
             }}
         >
-            {({
-                handleSubmit,
-                isSubmitting,
-                // isValid,
-                setFieldValue
-            }) => (
+            {({ handleSubmit, isSubmitting, setFieldValue }) => (
                 <form
                     className={classes.container}
                     onSubmit={handleSubmit}
