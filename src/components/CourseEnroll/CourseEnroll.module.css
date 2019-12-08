@@ -27,53 +27,6 @@
     margin: 0rem 0.75rem;
 }
 
-.form {
-    display: flex;
-    align-items: center;
-    flex-flow: column wrap;
-    margin-bottom: 2rem;
-}
-
-.listContainer {
-    padding: 2rem 0;
-    overflow: auto;
-    width: 90%;
-    border: 1px solid black;
-    max-height: 20rem;
-}
-
-.enrollBtn {
-    margin-top: 2rem;
-    width: 40%;
-}
-
-.enrollList {
-    border-collapse: collapse;
-    margin: auto;
-}
-
-.enrollList tr:nth-child(even) {
-    background: #abc;
-}
-
-.enrollList td,
-.enrollList th {
-    padding: 0.5rem;
-    text-align: center;
-}
-
-.btnLink {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: blue;
-    outline: none;
-    text-decoration: underline;
-}
-.btnLink:hover {
-    color: #1a2e41;
-}
-
 .modalBox {
     background: white;
     box-shadow: 1px 1px 3px 4px #ccc;
@@ -83,9 +36,4 @@
 
 .takenCourseTitle {
     margin-top: 3rem;
-}
-@media (min-width: 50rem) {
-    .listContainer {
-        width: 45rem;
-    }
 }

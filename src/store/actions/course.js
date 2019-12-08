@@ -41,5 +41,5 @@ export const updateCourse = course => async dispatch => {
 export const addCourse = course => async dispatch => {
     const res = await restAPI.post(adminCoursePath, course);
     console.log(res);
-    dispatch({ type: ADD_COURSE, course });
+    dispatch({ type: ADD_COURSE, course: res.data });
 };
