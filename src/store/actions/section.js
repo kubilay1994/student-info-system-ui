@@ -22,16 +22,9 @@ export const addSection = section => async dispatch => {
     dispatch({ type: ADD_SECTION, section: res.data });
 };
 
-export const updateSection = section => async dispatch => {
-    try {
-        const res = await restAPI.put(
-            `${adminSectionPath}/${section.id}`,
-            section
-        );
-        dispatch({ type: UPDATE_SECTION, section: res.data });
-    } catch (error) {
-        console.log(error);
-    }
+export const updateSection = (section, id) => async dispatch => {
+    const res = await restAPI.put(`${adminSectionPath}/${id}`, section);
+    dispatch({ type: UPDATE_SECTION, section: res.data });
 };
 
 export const deleteSection = id => async dispatch => {

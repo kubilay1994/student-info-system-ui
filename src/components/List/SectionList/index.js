@@ -16,16 +16,18 @@ const SectionList = ({ sections, navigate }) => {
     const willBeDeletedId = useRef(null);
 
     const handleEditIconClick = s => {
-        // console.log(s);
-        // const sectionData = {
-        //     sectionNumber : s.sectionCode.split('-')[1],
-        //     course : s.course.courseCode,
-        //     intructor : s.instructor.instructorCode,
-
-        // }
+        const editedSection = {
+            sectionNumber: s.sectionCode.split('-')[1],
+            course: s.course.courseCode,
+            intructor: s.instructor.instructorCode,
+            term: s.term,
+            year: s.year,
+            sectionClassrooms: [],
+            id: s.id
+        };
 
         navigate(`./edit/${s.id}`, {
-            state: { editedSection: {} }
+            state: { editedSection }
         });
     };
 

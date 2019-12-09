@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { format } from 'date-fns';
 
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { Formik, Field, Form, FieldArray } from 'formik';
@@ -13,7 +12,14 @@ import ErrorInfo from '../ErrorInfo';
 import { Button, Select, FormInput } from '../../UIcomponents';
 import classes from './SectionForm.module.css';
 import { useSelector, useDispatch } from '../../store';
-import { addSection } from '../../store/actions/section';
+import { addSection, updateSection } from '../../store/actions/section';
+
+const termOps = [
+    { value: 'Güz', label: 'Güz' },
+    { value: 'Bahar', label: 'Bahar' }
+];
+
+const currYear = new Date().getFullYear();
 
 const schema = Yup.object().shape({
     sectionNumber: Yup.number().required('Grup kodu zorunludur'),
@@ -55,13 +61,22 @@ const SectionForm = ({ location, navigate }) => {
                 startDate: format(item.startDate, 'HH:mm'),
                 finishDate: format(item.finishDate, 'HH:mm')
             })),
-            startDate: format(values.startDate, 'dd/MM/yyyy'),
-            finishDate: format(values.finishDate, 'dd/MM/yyyy')
+            year: values.year.toString(),
+            term: values.term
         };
+
+        console.log(body);
         try {
-            await dispatch(addSection(body));
+            if (editMode) {
+                await dispatch(updateSection(body, editedSection.id));
+            } else {
+                await dispatch(addSection(body));
+            }
             resetForm();
         } catch (error) {
+            console.log(error.message);
+            console.log(error.request);
+            console.log(error.response);
             resetForm();
             if (error.response) {
                 setStatus(error.response.data);
@@ -69,27 +84,22 @@ const SectionForm = ({ location, navigate }) => {
         }
     };
 
+    const initialValues = {
+        sectionNumber: '',
+        course: '',
+        instructor: '',
+        year: currYear,
+        term: '',
+        sectionClassrooms: []
+    };
+
     return (
         <Formik
-            initialValues={{
-                sectionNumber: '',
-                course: '',
-                instructor: '',
-                startDate: new Date(),
-                finishDate: new Date(),
-                sectionClassrooms: []
-            }}
+            initialValues={editMode ? editedSection : initialValues}
             validationSchema={schema}
             onSubmit={onSubmit}
         >
-            {({
-                isValid,
-                status,
-                isSubmitting,
-                dirty,
-                setFieldValue,
-                values: { course, startDate, finishDate }
-            }) => (
+            {({ isValid, status, isSubmitting, dirty, values: { course } }) => (
                 <Form className={classes.form}>
                     <h2>Ders Grubu Oluşturma Ekranı</h2>
                     <ErrorInfo message={status} />
@@ -129,29 +139,29 @@ const SectionForm = ({ location, navigate }) => {
                             <div className={classes.timePickerContainer}>
                                 <div className={classes.dateContainer}>
                                     <label className={classes.label}>
-                                        Ders Grubu başlangıç tarihi
+                                        Ders Grubu başlangıç senesi
                                     </label>
-                                    <DatePicker
-                                        className={classes.datePicker}
-                                        selected={startDate}
-                                        onChange={date =>
-                                            setFieldValue('startDate', date)
-                                        }
+
+                                    <Field
+                                        name="year"
+                                        component={FormInput}
+                                        type="number"
+                                        placeholder="Lütfen grup numarasını giriniz"
+                                        containerClass={classes.input}
+                                        inputClass={`${classes.numInput} ${classes.numAlign}`}
+                                        min={currYear}
                                     />
                                 </div>
 
-                                <div className={classes.dateContainer}>
-                                    <label className={classes.label}>
-                                        Ders Grubu bitiş tarihi
-                                    </label>
-                                    <DatePicker
-                                        className={classes.datePicker}
-                                        selected={finishDate}
-                                        onChange={date =>
-                                            setFieldValue('finishDate', date)
-                                        }
-                                    />
-                                </div>
+                                <Field
+                                    name="term"
+                                    component={Select}
+                                    options={termOps}
+                                    label="Ders Grubu Dönemi"
+                                    placeholder="Dönem Seçiniz"
+                                    containerClass={classes.formSelectContainer}
+                                    selectClass={classes.termSelect}
+                                />
                             </div>
 
                             <FieldArray

@@ -13,9 +13,8 @@
 }
 
 .formSelectContainer {
-    width: 50%;
     align-items: center;
-    padding: 0.3rem;
+    padding: 0.4rem;
 }
 
 .formSelect {
@@ -52,6 +51,11 @@
     width: 100%;
 }
 
+.numAlign {
+    text-align: center;
+    padding: 0.3rem;
+}
+
 .buttonContainer {
     display: flex;
     flex-flow: column wrap;
@@ -59,14 +63,18 @@
     width: 50%;
 }
 
-
+.termSelect {
+    width: 75%;
+}
 
 @media (min-width: 40rem) {
     .formSelectContainer {
-        width: 20rem;
+        width: 15rem;
     }
     .timePickerContainer {
         display: flex;
+        align-items: center;
+        justify-content: center;
         margin: 1rem;
     }
 
