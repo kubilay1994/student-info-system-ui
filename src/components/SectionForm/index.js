@@ -46,7 +46,7 @@ const SectionForm = ({ location, navigate }) => {
         label: course.title
     }));
 
-    const { editedSection } = location.state;
+    const editedSection = location.state ? location.state.editedSection : null;
     const editMode = !!editedSection;
 
     const instOpts = [{ value: '99011001', label: 'M Utku Kalay' }];
@@ -92,6 +92,8 @@ const SectionForm = ({ location, navigate }) => {
         term: '',
         sectionClassrooms: []
     };
+
+    console.log(editedSection);
 
     return (
         <Formik

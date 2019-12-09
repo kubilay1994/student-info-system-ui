@@ -108,7 +108,7 @@ const EnrollList = ({ data, deleteMode, onScheduleClick }) => {
                         btnCLass={classes.enrollBtn}
                         color="turkuaz"
                     >
-                        Ekle
+                        {deleteMode ? 'Sil' : 'Ekle'}
                     </Button>
                 </Form>
             )}

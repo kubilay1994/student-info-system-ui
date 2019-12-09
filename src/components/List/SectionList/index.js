@@ -19,7 +19,7 @@ const SectionList = ({ sections, navigate }) => {
         const editedSection = {
             sectionNumber: s.sectionCode.split('-')[1],
             course: s.course.courseCode,
-            intructor: s.instructor.instructorCode,
+            instructor: s.instructor.instructorCode,
             term: s.term,
             year: s.year,
             sectionClassrooms: [],
