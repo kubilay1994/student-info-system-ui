@@ -7,6 +7,8 @@ import { Button, Modal } from '../../../UIcomponents';
 import { useDispatch } from '../../../store';
 import { deleteSection } from '../../../store/actions/section';
 
+import { parse } from 'date-fns';
+
 import classes from '../List.module.css';
 import SectionListClasses from './SectionList.module.css';
 
@@ -16,13 +18,21 @@ const SectionList = ({ sections, navigate }) => {
     const willBeDeletedId = useRef(null);
 
     const handleEditIconClick = s => {
+        const now = Date.now();
         const editedSection = {
             sectionNumber: s.sectionCode.split('-')[1],
             course: s.course.courseCode,
             instructor: s.instructor.instructorCode,
             term: s.term,
             year: s.year,
-            sectionClassrooms: [],
+            quota: s.quota,
+            sectionClassrooms: s.sectionClassrooms.map(sc => {
+                return {
+                    ...sc,
+                    startTime: parse(sc.startTime, 'HH:mm', now),
+                    finishTime: parse(sc.finishTime, 'HH:mm', now)
+                };
+            }),
             id: s.id
         };
 
@@ -38,9 +48,10 @@ const SectionList = ({ sections, navigate }) => {
 
     const handleSectionDelete = () => {
         dispatch(deleteSection(willBeDeletedId.current));
-        // console.log(willBeDeletedId.current);
         setIsModalOpen(false);
     };
+
+
     return (
         <div className={classes.container}>
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>

@@ -7,6 +7,8 @@ import Dropdown from './Dropdown';
 
 import { CSSTransition } from 'react-transition-group';
 
+import { useSelector } from '../../store';
+
 import {
     FaUserShield,
     FaAddressBook,
@@ -14,7 +16,8 @@ import {
     FaHome,
     FaBookOpen,
     FaBook,
-    FaChessBoard
+    FaChessBoard,
+    FaListUl
 } from 'react-icons/fa';
 
 const isActive = ({ isCurrent }) => {
@@ -25,14 +28,18 @@ const isActive = ({ isCurrent }) => {
     return { className: linkClasses.join(' ') };
 };
 
+const userSelector = state => state.user.user;
 const Sidebar = ({ onLogout, open, onLinkClicked }) => {
+    const user = useSelector(userSelector);
     return (
         <CSSTransition in={open} timeout={400} classNames="slide" unmountOnExit>
             <nav className={classes.container}>
                 <header className={classes.sidebarHeader}>
-                    <p className={classes.headerText}>
-                        Header of the Sidebar. Probably some date with a photo
-                    </p>
+                    <h3 className={classes.headerText}>
+                        <div>{`${user.role} Account `}</div>
+                        {user.role !== 'Admin' &&
+                            `${user.firstName} ${user.lastName}`}
+                    </h3>
                 </header>
 
                 <ul className={classes.items}>
@@ -66,23 +73,36 @@ const Sidebar = ({ onLogout, open, onLinkClicked }) => {
                             onClick={onLinkClicked}
                         >
                             <FaAddressBook size={20} className={classes.icon} />
-                            Öğrenci İletişim Bilgisi Düzenleme
+                            İletişim Bilgisi Düzenleme
+                        </Link>
+                    </li>
+                    <li className={classes.item}>
+                        <Link
+                            to="offeredCourses"
+                            getProps={isActive}
+                            onClick={onLinkClicked}
+                        >
+                            <FaAddressBook size={20} className={classes.icon} />
+                            Bölüme Açılan Dersler
                         </Link>
                     </li>
 
-                    <Dropdown
-                        isActive={isActive}
-                        headerData={courseOpsHeaderData}
-                        itemData={courseOpData}
-                        onLinkClicked={onLinkClicked}
-                    />
-                    <Dropdown
-                        isActive={isActive}
-                        headerData={dropDownHeaderData}
-                        itemData={dropdownItemData}
-                        onLinkClicked={onLinkClicked}
-                    />
-
+                    {user.role === 'Student' && (
+                        <Dropdown
+                            isActive={isActive}
+                            headerData={courseOpsHeaderData}
+                            itemData={courseOpData}
+                            onLinkClicked={onLinkClicked}
+                        />
+                    )}
+                    {user.role === 'Admin' && (
+                        <Dropdown
+                            isActive={isActive}
+                            headerData={dropDownHeaderData}
+                            itemData={dropdownItemData}
+                            onLinkClicked={onLinkClicked}
+                        />
+                    )}
                     <Button
                         btnCLass={classes.sidebarBtn}
                         onClick={onLogout}
@@ -110,6 +130,12 @@ const courseOpData = [
         path: 'student/enrollCourse',
         title: 'Ders Ekle',
         Icon: FaChessBoard
+    },
+    {
+        id: 2,
+        path: 'student/stdCourseList',
+        title: 'Öğrencinin Aldığı Dersler ',
+        Icon: FaListUl
     }
 ];
 

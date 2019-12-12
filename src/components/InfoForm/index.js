@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import FormInput from '../../UIcomponents/FormInput';
 import Button from '../../UIcomponents/Button';
 
+import { useSelector } from '../../store';
 import classes from './InfoForm.module.css';
 
 const schema = Yup.object().shape({
@@ -16,15 +17,22 @@ const schema = Yup.object().shape({
         .email('Lütfen geçerli bir email adresi giriniz')
         .required('Email adresi zoruludur')
 });
+
+
+const userSelector = state => state.user.user;
+
 const InfoForm = () => {
+    const user = useSelector(userSelector);
+
+
     return (
         <Formik
             initialValues={{
-                address: '',
+                address: user.address ? user.address : '',
                 province: '',
                 district: '',
-                gsm: '',
-                email: ''
+                gsm: user.phoneNumber ? user.phoneNumber : '',
+                email: user.mail ? user.mail : ''
             }}
             validationSchema={schema}
             onSubmit={(values, { setSubmitting }) => {

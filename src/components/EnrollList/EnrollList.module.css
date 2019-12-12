@@ -3,6 +3,7 @@
     align-items: center;
     flex-flow: column wrap;
     margin-bottom: 2rem;
+    width: 100%;
 }
 
 .listContainer {
@@ -30,6 +31,7 @@
 .enrollList td,
 .enrollList th {
     padding: 0.5rem;
+    white-space: nowrap;
     text-align: center;
 }
 
@@ -48,5 +50,8 @@
 @media (min-width: 50rem) {
     .listContainer {
         width: 45rem;
+    }
+    .enrollBtn {
+        width: 20%;
     }
 }

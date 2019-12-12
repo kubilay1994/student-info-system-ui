@@ -1,33 +1,42 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from '../../layouts/MainLayout';
 import CourseSchedule from '../../components/CourseSchedule';
-import CourseForm from '../../components/CourseForm';
-import CourseList from '../../components/List/CourseList';
-import SectionList from '../../components/List/SectionList';
-import SectionForm from '../../components/SectionForm';
-
-import CourseEnroll from '../../components/CourseEnroll';
+import OpenedSections from '../../components/OpenedSections';
 
 import InfoForm from '../../components/InfoForm';
 
 import { Router } from '@reach/router';
 
-import { useDispatch, useSelector } from '../../store';
-import { fetchCourses } from '../../store/actions/course';
-import { fetchAllSections } from '../../store/actions/section';
+import AdminRouter from '../../components/AdminRouter';
+import StudentRouter from '../../components/StudentRouter';
+import restAPI from '../../axios-instances';
 
-const coursesSelector = state => state.course.courses;
-const sectionsSelector = state => state.section.sections;
+import { useSelector } from '../../store';
+import { term, year } from '../../utils/constants';
+
+const commonSectionPath = '/api/rest/common/sections';
+const roleSelector = state => state.user.user.role;
 
 const MainPage = () => {
-    const courses = useSelector(coursesSelector);
-    const sections = useSelector(sectionsSelector);
+    const [termSections, setTermSections] = useState([]);
+    const role = useSelector(roleSelector);
 
-    const dispatch = useCallback(useDispatch(), []);
     useEffect(() => {
-        dispatch(fetchCourses());
-        dispatch(fetchAllSections());
-    }, [dispatch]);
+        const fetchSectionByYearAndTerm = async () => {
+            try {
+                const res = await restAPI.get(
+                    `${commonSectionPath}/${year}/${term}`
+                );
+                setTermSections(res.data);
+            } catch (error) {
+                // console.log(error.message);
+                // console.log(error.response);
+                // console.log(error.request);
+            }
+        };
+
+        fetchSectionByYearAndTerm();
+    }, []);
 
     return (
         <>
@@ -35,19 +44,17 @@ const MainPage = () => {
             <Router primary={false}>
                 <CourseSchedule path="courseSchedule" />
                 <InfoForm path="updateContactInfo" />
-
-                <SectionList path="admin/sections" sections={sections} />
-                <SectionForm path="admin/sections/add" sections={sections} />
-                <SectionForm
-                    path="admin/sections/edit/:id"
-                    sections={sections}
+                <OpenedSections
+                    path="offeredCourses"
+                    termSections={termSections}
                 />
-
-                <CourseList path="admin/courses" courses={courses} />
-                <CourseForm path="admin/courses/add" courses={courses} />
-                <CourseForm path="admin/courses/edit/:id" courses={courses} />
-
-                <CourseEnroll path="student/enrollCourse" sections={sections} />
+                {role === 'Admin' && <AdminRouter path="admin/*" />}
+                {role === 'Student' && (
+                    <StudentRouter
+                        path="/student/*"
+                        termSections={termSections}
+                    />
+                )}
             </Router>
         </>
     );

@@ -27,8 +27,8 @@ const schema = Yup.object().shape({
     sectionClassrooms: Yup.array()
         .of(
             Yup.object().shape({
-                startDate: Yup.date().required('Başlangıç zamanı giriniz'),
-                finishDate: Yup.date().required('Bitiş zamanı giriniz'),
+                startTime: Yup.date().required('Başlangıç zamanı giriniz'),
+                finishTime: Yup.date().required('Bitiş zamanı giriniz'),
                 classroomCode: Yup.string().required('Geçerli Derslik giriniz')
             })
         )
@@ -48,7 +48,6 @@ const SectionForm = ({ location, navigate }) => {
 
     const editedSection = location.state ? location.state.editedSection : null;
     const editMode = !!editedSection;
-
     const instOpts = [{ value: '99011001', label: 'M Utku Kalay' }];
 
     const onSubmit = async (values, { resetForm, setStatus }) => {
@@ -58,14 +57,15 @@ const SectionForm = ({ location, navigate }) => {
             instructorCode: values.instructor,
             sectionClassrooms: values.sectionClassrooms.map(item => ({
                 ...item,
-                startDate: format(item.startDate, 'HH:mm'),
-                finishDate: format(item.finishDate, 'HH:mm')
+                startTime: format(item.startTime, 'HH:mm'),
+                finishTime: format(item.finishTime, 'HH:mm')
             })),
             year: values.year.toString(),
-            term: values.term
+            term: values.term,
+            quota: values.quota
         };
 
-        console.log(body);
+
         try {
             if (editMode) {
                 await dispatch(updateSection(body, editedSection.id));
@@ -74,9 +74,6 @@ const SectionForm = ({ location, navigate }) => {
             }
             resetForm();
         } catch (error) {
-            console.log(error.message);
-            console.log(error.request);
-            console.log(error.response);
             resetForm();
             if (error.response) {
                 setStatus(error.response.data);
@@ -85,15 +82,16 @@ const SectionForm = ({ location, navigate }) => {
     };
 
     const initialValues = {
-        sectionNumber: '',
+        sectionNumber: 1,
         course: '',
         instructor: '',
         year: currYear,
         term: '',
+        quota: 0,
         sectionClassrooms: []
     };
 
-    console.log(editedSection);
+    const minQuota = editMode ? editedSection.quota : initialValues.quota;
 
     return (
         <Formik
@@ -103,7 +101,10 @@ const SectionForm = ({ location, navigate }) => {
         >
             {({ isValid, status, isSubmitting, dirty, values: { course } }) => (
                 <Form className={classes.form}>
-                    <h2>Ders Grubu Oluşturma Ekranı</h2>
+                    <h2>
+                        Ders Grubu {editMode ? 'Güncelleme ' : 'Oluşturma '}
+                        Ekranı
+                    </h2>
                     <ErrorInfo message={status} />
                     <Field
                         name="course"
@@ -122,10 +123,19 @@ const SectionForm = ({ location, navigate }) => {
                                 component={FormInput}
                                 label="Grup Numarası"
                                 type="number"
-                                placeholder="Lütfen grup numarasını giriniz"
                                 containerClass={classes.input}
-                                inputClass={classes.numInput}
-                                min="0"
+                                inputClass={classes.numAlign}
+                                min="1"
+                            />
+
+                            <Field
+                                name="quota"
+                                component={FormInput}
+                                type="number"
+                                label="Kontenjan"
+                                min={minQuota}
+                                containerClass={classes.input}
+                                inputClass={classes.numAlign}
                             />
 
                             <Field

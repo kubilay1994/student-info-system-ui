@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { navigate } from '@reach/router';
 import restAPI from '../axios-instances';
+
+import { useDispatch } from '../store';
+import { setUser } from '../store/actions/user';
 
 const AuthContext = React.createContext({
     token: null,
     error: null,
+    loginDate: null,
     login: () => {},
     singup: () => {},
     clearAuthData: () => {}
@@ -18,6 +22,7 @@ const getTokenAndAdjustLocalStorage = () => {
     if (token && expireTime < Date.now()) {
         localStorage.removeItem('token');
         localStorage.removeItem('expiresInMillis');
+        localStorage.removeItem('user');
         return null;
     }
     return token;
@@ -26,6 +31,8 @@ const getTokenAndAdjustLocalStorage = () => {
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(() => getTokenAndAdjustLocalStorage());
     const [error, setError] = useState(null);
+
+    const dispatch = useCallback(useDispatch(), []);
 
     useEffect(() => {
         const interceptor = restAPI.interceptors.response.use(
@@ -48,9 +55,12 @@ export const AuthProvider = ({ children }) => {
             ] = `Bearer ${token}`;
         } else {
             navigate('/login', { replace: true });
+            dispatch(setUser(null));
+            localStorage.removeItem('user');
+
             delete restAPI.defaults.headers.common['Authorization'];
         }
-    }, [token]);
+    }, [token, dispatch]);
 
     const login = async (username, password) => {
         try {
@@ -58,10 +68,19 @@ export const AuthProvider = ({ children }) => {
                 username,
                 password
             });
+            let userInfo;
+
+            if (data.role === 'Admin') {
+                userInfo = { role: data.role, user: data.user };
+            } else {
+                userInfo = { role: data.role, ...data.user };
+            }
             setToken(data.accessToken);
             setError(null);
+            dispatch(setUser(userInfo));
             localStorage.setItem('token', data.accessToken);
             localStorage.setItem('expiresInMillis', data.expiresInMillis);
+            localStorage.setItem('user', JSON.stringify(userInfo));
         } catch (err) {
             if (err.response) {
                 setError(err.response.data);
@@ -71,17 +90,23 @@ export const AuthProvider = ({ children }) => {
         return true;
     };
 
-    const signup = () => {};
-
     const clearAuthData = () => {
         setToken(null);
         localStorage.removeItem('token');
         localStorage.removeItem('expiresInMillis');
     };
 
+    const signup = () => {};
+
     return (
         <AuthContext.Provider
-            value={{ token, login, signup, clearAuthData, error }}
+            value={{
+                token,
+                login,
+                signup,
+                clearAuthData,
+                error
+            }}
         >
             {children}
         </AuthContext.Provider>

@@ -40,12 +40,15 @@
 .label {
     font-weight: bold;
     font-style: italic;
+    font-size: small;
     margin-top: 0.75rem;
     text-align: center;
 }
 
 .input {
+    text-align: center;
     margin: 0.5rem;
+    align-items: center;
 }
 
 .numInput {
@@ -55,6 +58,8 @@
 .numAlign {
     text-align: center;
     padding: 0.3rem;
+    padding-left: 1rem;
+    width: 70%;
 }
 
 .buttonContainer {

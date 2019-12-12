@@ -1,5 +1,5 @@
 const initialState = {
-    sections: []
+    sections: [],
 };
 
 export const SET_SECTIONS = 'SET_SECTIONS';

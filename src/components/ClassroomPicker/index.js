@@ -50,8 +50,8 @@ const ClassroomPicker = ({ form, push, remove }) => {
                 onClick={() =>
                     push({
                         day: 'Pazartesi',
-                        startDate: null,
-                        finishDate: null,
+                        startTime: null,
+                        finishTime: null,
                         type: 'Ders',
                         classroomCode: ''
                     })
@@ -92,10 +92,10 @@ const ClassroomPicker = ({ form, push, remove }) => {
                             timeCaption="Time"
                             timeFormat="HH:mm"
                             dateFormat="HH:mm"
-                            selected={sectionClassrooms[index].startDate}
+                            selected={sectionClassrooms[index].startTime}
                             onChange={date =>
                                 setFieldValue(
-                                    `sectionClassrooms[${index}].startDate`,
+                                    `sectionClassrooms[${index}].startTime`,
                                     date
                                 )
                             }
@@ -109,10 +109,10 @@ const ClassroomPicker = ({ form, push, remove }) => {
                             timeCaption="Time"
                             timeFormat="H:mm"
                             dateFormat="H:mm"
-                            selected={sectionClassrooms[index].finishDate}
+                            selected={sectionClassrooms[index].finishTime}
                             onChange={date => {
                                 setFieldValue(
-                                    `sectionClassrooms[${index}].finishDate`,
+                                    `sectionClassrooms[${index}].finishTime`,
                                     date
                                 );
                             }}

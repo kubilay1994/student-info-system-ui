@@ -10,12 +10,14 @@ import { Provider, createStore, combineReducers } from './store';
 import courseReducer from './store/reducers/course';
 import classroomReducer from './store/reducers/classroom';
 import sectionRecuder from './store/reducers/section';
+import userReducer from './store/reducers/user';
 
 const store = createStore(
     combineReducers({
         course: courseReducer,
         classroom: classroomReducer,
-        section: sectionRecuder
+        section: sectionRecuder,
+        user: userReducer
     })
 );
 

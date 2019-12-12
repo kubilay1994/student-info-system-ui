@@ -1,0 +1,38 @@
+.container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    text-align: center;
+    max-width: 90%;
+}
+
+.tableContainer {
+    margin: 3rem;
+    max-width: 90%;
+    overflow: auto;
+    /* box-shadow: 1px 1px 4px 1px #00808057; */
+    max-height: 40rem;
+}
+
+.offeredCourses {
+    border-collapse: collapse;
+}
+
+.offeredCourses tr {
+    border-bottom: 2px solid #00808057;
+}
+
+.offeredCourses tr:nth-child(even) {
+    background: #00808057;
+}
+
+.offeredCourses td,
+.offeredCourses th {
+    padding: 0.5rem;
+    white-space: nowrap;
+    text-align: center;
+}

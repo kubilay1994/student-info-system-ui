@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 2rem;
+    align-items: center;
+}
+
+.listContainer {
+    margin: 2.5rem;
+    max-width: 90%;
+    overflow: auto;
+}
+
+.stdEnrollList {
+    border-collapse: collapse;
+}
+
+.stdEnrollList tr {
+    border-bottom: 1px solid #00808057;
+}
+
+.stdEnrollList tr:nth-child(even) {
+    background: #00808057;
+}
+
+.stdEnrollList td,
+.stdEnrollList th {
+    padding: 0.4rem;
+    text-align: center;
+}

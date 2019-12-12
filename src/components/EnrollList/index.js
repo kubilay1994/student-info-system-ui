@@ -1,17 +1,13 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { object } from 'yup';
+import { object, number } from 'yup';
 
 import { Button } from '../../UIcomponents';
 
 import classes from './EnrollList.module.css';
 
 const schema = object().shape({
-    enrolledSection: object().required()
-});
-
-const unenrollSchema = object().shape({
-    unenrolledSection: object().required()
+    sectionId: number().required()
 });
 
 const addModeHeader = [
@@ -31,27 +27,40 @@ const deleteModeHeader = [
     'Dersin Dili'
 ];
 
-const EnrollList = ({ data, deleteMode, onScheduleClick }) => {
-    const formSchema = deleteMode ? unenrollSchema : schema;
-    const initialValues = deleteMode
-        ? { enrolledSection: '' }
-        : { unenrolledSection: '' };
-
+const EnrollList = ({
+    data,
+    deleteMode,
+    onScheduleClick,
+    onEnroll,
+    onUnenroll,
+    onError
+}) => {
     const headerData = deleteMode ? deleteModeHeader : addModeHeader;
+    const btnColor = deleteMode ? 'outline-red' : 'turkuaz';
+
+    const onSubmit = async values => {
+        try {
+            if (deleteMode) {
+                await onUnenroll(values.sectionId);
+            } else {
+                await onEnroll(values.sectionId);
+            }
+            onError(null);
+        } catch (error) {
+            if (error.response) {
+                onError(error.response.data);
+            }
+        }
+    };
 
     return (
         <Formik
-            initialValues={initialValues}
-            validationSchema={formSchema}
-            validateOnMount={true}
-            onSubmit={(values, { setSubmitting }) => {
-                setSubmitting(true);
-
-                console.log(values, 'hello');
-                setSubmitting(false);
-            }}
+            initialValues={{ sectionId: '' }}
+            validationSchema={schema}
+            validateOnMount
+            onSubmit={onSubmit}
         >
-            {({ isSubmitting, setFieldValue, isValid }) => (
+            {({ isSubmitting, setFieldValue, isValid, status }) => (
                 <Form className={classes.form}>
                     <div className={classes.listContainer}>
                         <table className={classes.enrollList}>
@@ -69,12 +78,12 @@ const EnrollList = ({ data, deleteMode, onScheduleClick }) => {
                                         <td>
                                             <input
                                                 type="radio"
-                                                name="enrolledSection"
+                                                name="sectionId"
                                                 value={d.id}
                                                 onChange={() =>
                                                     setFieldValue(
-                                                        'enrolledSection',
-                                                        d
+                                                        'sectionId',
+                                                        d.id
                                                     )
                                                 }
                                             />
@@ -106,7 +115,7 @@ const EnrollList = ({ data, deleteMode, onScheduleClick }) => {
                         type="submit"
                         disabled={isSubmitting || !isValid}
                         btnCLass={classes.enrollBtn}
-                        color="turkuaz"
+                        color={btnColor}
                     >
                         {deleteMode ? 'Sil' : 'Ekle'}
                     </Button>
