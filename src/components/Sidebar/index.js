@@ -29,15 +29,19 @@ const isActive = ({ isCurrent }) => {
 };
 
 const userSelector = state => state.user.user;
+const roleSelector = state => state.user.role;
+
 const Sidebar = ({ onLogout, open, onLinkClicked }) => {
     const user = useSelector(userSelector);
+    const role = useSelector(roleSelector);
+
     return (
         <CSSTransition in={open} timeout={400} classNames="slide" unmountOnExit>
             <nav className={classes.container}>
                 <header className={classes.sidebarHeader}>
                     <h3 className={classes.headerText}>
-                        <div>{`${user.role} Account `}</div>
-                        {user.role !== 'Admin' &&
+                        <div>{`${role} Account `}</div>
+                        {role !== 'Admin' &&
                             `${user.firstName} ${user.lastName}`}
                     </h3>
                 </header>
@@ -53,19 +57,7 @@ const Sidebar = ({ onLogout, open, onLinkClicked }) => {
                             Ana Sayfa
                         </Link>
                     </li>
-                    <li className={classes.item}>
-                        <Link
-                            to="courseSchedule"
-                            getProps={isActive}
-                            onClick={onLinkClicked}
-                        >
-                            <FaClipboardList
-                                size={20}
-                                className={classes.icon}
-                            />
-                            Ders Programı
-                        </Link>
-                    </li>
+
                     <li className={classes.item}>
                         <Link
                             to="updateContactInfo"
@@ -87,7 +79,7 @@ const Sidebar = ({ onLogout, open, onLinkClicked }) => {
                         </Link>
                     </li>
 
-                    {user.role === 'Student' && (
+                    {role === 'Student' && (
                         <Dropdown
                             isActive={isActive}
                             headerData={courseOpsHeaderData}
@@ -95,7 +87,7 @@ const Sidebar = ({ onLogout, open, onLinkClicked }) => {
                             onLinkClicked={onLinkClicked}
                         />
                     )}
-                    {user.role === 'Admin' && (
+                    {role === 'Admin' && (
                         <Dropdown
                             isActive={isActive}
                             headerData={dropDownHeaderData}
@@ -136,6 +128,12 @@ const courseOpData = [
         path: 'student/stdCourseList',
         title: 'Öğrencinin Aldığı Dersler ',
         Icon: FaListUl
+    },
+    {
+        id: 3,
+        path: 'student/courseSchedule',
+        title: 'Ders Programı',
+        Icon: FaClipboardList
     }
 ];
 

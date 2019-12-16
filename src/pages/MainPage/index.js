@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import MainLayout from '../../layouts/MainLayout';
-import CourseSchedule from '../../components/CourseSchedule';
 import OpenedSections from '../../components/OpenedSections';
 
 import InfoForm from '../../components/InfoForm';
@@ -15,7 +14,7 @@ import { useSelector } from '../../store';
 import { term, year } from '../../utils/constants';
 
 const commonSectionPath = '/api/rest/common/sections';
-const roleSelector = state => state.user.user.role;
+const roleSelector = state => state.user.role;
 
 const MainPage = () => {
     const [termSections, setTermSections] = useState([]);
@@ -42,7 +41,6 @@ const MainPage = () => {
         <>
             <MainLayout />
             <Router primary={false}>
-                <CourseSchedule path="courseSchedule" />
                 <InfoForm path="updateContactInfo" />
                 <OpenedSections
                     path="offeredCourses"

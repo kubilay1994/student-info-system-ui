@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import { Router } from '@reach/router';
 
-
 import CourseEnroll from '../CourseEnroll';
 import StdEnrollList from '../StdEnrollList';
 
 import { term, year } from '../../utils/constants';
 
 import restAPI from '../../axios-instances';
+import CourseSchedule from '../../components/CourseSchedule';
 
 const baseUrl = '/api/rest/student/sections';
 
@@ -32,13 +32,11 @@ const StudentRouter = ({ termSections }) => {
         const fetchStudentSections = async () => {
             try {
                 const res = await restAPI.get(baseUrl);
-                console.log(res);
                 setStudentSections(res.data);
-
             } catch (error) {
-                console.log(error.response)
+                console.log(error.response);
             }
-        }
+        };
 
         fetchEnrollledSections();
         fetchStudentSections();
@@ -50,6 +48,7 @@ const StudentRouter = ({ termSections }) => {
             ...enrolledSections,
             res.data
         ]);
+        setStudentSections(studentSections => [...studentSections, res.data]);
     };
 
     const handleUnenrollSection = async id => {
@@ -57,10 +56,15 @@ const StudentRouter = ({ termSections }) => {
         setEnrolledSections(enrolledSections =>
             enrolledSections.filter(s => s.id !== id)
         );
+        setStudentSections(studentSections =>
+            studentSections.filter(s => s.id !== id)
+        );
     };
 
     return (
         <Router primary={false}>
+            <CourseSchedule path="courseSchedule" sections={studentSections} />
+
             <CourseEnroll
                 path="enrollCourse"
                 sections={termSections}

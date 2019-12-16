@@ -1,47 +1,50 @@
 .title {
     text-align: center;
-    margin-top : 2rem;
-    margin-bottom: 0;
+    margin: 2rem;
 }
 
 .container {
-    margin: auto;
-    margin-top: 1.5rem;
+    margin: 1.5rem;
     padding-bottom: 1rem;
-    width: 100vw;
     overflow: auto;
-    background: whitesmoke;
+    background: #00808057;
+    font-size: small;
+    white-space: nowrap;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .table {
     border-collapse: collapse;
-    margin: 1rem 3rem;
+    width: 90%;
+    margin: auto 3rem;
 }
-
 
 .table th,
 .table td {
-    border: 1px solid #ddd;
-    width: 6rem;
-    padding: 0.5rem;
+    border: 2px solid #008080;
+    padding: 0.75rem;
     text-align: center;
+    width : 30rem;
+}
+.table td div {
+    padding: 0.3rem;
 }
 
 .table th {
-    border-bottom-color: #777;
+    border-bottom-color: #016969;
 }
 
 .table th:first-child {
-    border-right-color: #777;
+    border-right-color: #016969;
 }
 
 .table tbody td:first-child {
-    border-right-color: #777;
+    border-right-color: #016969;
 }
 
 @media (min-width: 40rem) {
     .container {
-        width: fit-content;
-        box-shadow: 3px 3px 6px 6px rgba(128, 128, 128, 0.363);
+        box-shadow: 3px 3px 6px 6px #00808057;
     }
 }

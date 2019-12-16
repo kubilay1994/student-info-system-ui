@@ -5,6 +5,7 @@ import InfoBox from '../InfoBox';
 import classes from './StdEnrollList.module.css';
 
 const StdEnrollList = ({ studentSections }) => {
+    console.log(studentSections);
     return (
         <div className={classes.container}>
             <InfoBox mode="extend" />
@@ -25,33 +26,16 @@ const StdEnrollList = ({ studentSections }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {studentSections.map(studentSection => (
-                                <tr key={Math.random()}>
-                                    <td>{`${studentSection.year} ${studentSection.term}`}</td>
-                                    <td>
-                                        {
-                                            studentSection.course
-                                                .courseCode
-                                        }
-                                    </td>
-                                    <td>
-                                        {studentSection.course.title}
-                                    </td>
-                                    <td>
-                                        {
-                                            studentSection.sectionCode.split(
-                                                '-'
-                                            )[1]
-                                        }
-                                    </td>
-                                    <td>
-                                        {studentSection.course.credit}
-                                    </td>
-                                    <td>{studentSection.grade}</td>
-                                    <td>
-                                        {studentSection.course.language}
-                                    </td>
-                                    <td>{`${studentSection.instructor.firstName} ${studentSection.instructor.lastName}`}</td>
+                            {studentSections.map(section => (
+                                <tr key={section.id}>
+                                    <td>{`${section.year} ${section.term}`}</td>
+                                    <td>{section.course.courseCode}</td>
+                                    <td>{section.course.title}</td>
+                                    <td>{section.sectionCode.split('-')[1]}</td>
+                                    <td>{section.course.credit}</td>
+                                    <td>{}</td>
+                                    <td>{section.course.language}</td>
+                                    <td>{`${section.instructor.firstName} ${section.instructor.lastName}`}</td>
                                 </tr>
                             ))}
                         </tbody>

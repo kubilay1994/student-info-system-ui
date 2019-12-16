@@ -3,7 +3,7 @@ import { navigate } from '@reach/router';
 import restAPI from '../axios-instances';
 
 import { useDispatch } from '../store';
-import { setUser } from '../store/actions/user';
+import { setRole, fetchUserInfoAndSet, setUser } from '../store/actions/user';
 
 const AuthContext = React.createContext({
     token: null,
@@ -22,7 +22,7 @@ const getTokenAndAdjustLocalStorage = () => {
     if (token && expireTime < Date.now()) {
         localStorage.removeItem('token');
         localStorage.removeItem('expiresInMillis');
-        localStorage.removeItem('user');
+        localStorage.removeItem('role');
         return null;
     }
     return token;
@@ -53,11 +53,15 @@ export const AuthProvider = ({ children }) => {
             restAPI.defaults.headers.common[
                 'Authorization'
             ] = `Bearer ${token}`;
+            const role = localStorage.getItem('role');
+            dispatch(fetchUserInfoAndSet(role)).catch(err =>
+                console.log(err.response)
+            );
         } else {
             navigate('/login', { replace: true });
+            dispatch(setRole(null));
             dispatch(setUser(null));
-            localStorage.removeItem('user');
-
+            localStorage.removeItem('role');
             delete restAPI.defaults.headers.common['Authorization'];
         }
     }, [token, dispatch]);
@@ -68,19 +72,14 @@ export const AuthProvider = ({ children }) => {
                 username,
                 password
             });
-            let userInfo;
 
-            if (data.role === 'Admin') {
-                userInfo = { role: data.role, user: data.user };
-            } else {
-                userInfo = { role: data.role, ...data.user };
-            }
+            dispatch(setRole(data.role));
+            localStorage.setItem('role', data.role);
+
             setToken(data.accessToken);
             setError(null);
-            dispatch(setUser(userInfo));
             localStorage.setItem('token', data.accessToken);
             localStorage.setItem('expiresInMillis', data.expiresInMillis);
-            localStorage.setItem('user', JSON.stringify(userInfo));
         } catch (err) {
             if (err.response) {
                 setError(err.response.data);

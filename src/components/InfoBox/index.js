@@ -4,10 +4,11 @@ import { useSelector } from '../../store';
 
 import classes from './InfoBox.module.css';
 const userSelector = state => state.user.user;
+const roleSelector = state => state.user.role;
 
 const InfoBox = ({ mode }) => {
     const user = useSelector(userSelector);
-
+    const role = useSelector(roleSelector);
     const studentSchema = [
         { label: ' Ad Soyad : ', data: ` ${user.firstName} ${user.lastName}` },
         { label: 'Numara : ', data: user.studentCode },
@@ -24,7 +25,7 @@ const InfoBox = ({ mode }) => {
     }
 
     let schema;
-    if (user.role === 'Student') {
+    if (role === 'Student') {
         schema = studentSchema;
     } else {
         schema = [];
