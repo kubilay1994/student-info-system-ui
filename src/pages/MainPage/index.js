@@ -8,6 +8,8 @@ import { Router } from '@reach/router';
 
 import AdminRouter from '../../components/AdminRouter';
 import StudentRouter from '../../components/StudentRouter';
+import InstructorRouter from '../../components/InstructorRouter';
+
 import restAPI from '../../axios-instances';
 
 import { useSelector } from '../../store';
@@ -19,7 +21,6 @@ const roleSelector = state => state.user.role;
 const MainPage = () => {
     const [termSections, setTermSections] = useState([]);
     const role = useSelector(roleSelector);
-
     useEffect(() => {
         const fetchSectionByYearAndTerm = async () => {
             try {
@@ -52,6 +53,10 @@ const MainPage = () => {
                         path="/student/*"
                         termSections={termSections}
                     />
+                )}
+
+                {role === 'Instructor' && (
+                    <InstructorRouter path="instructor/*" />
                 )}
             </Router>
         </>

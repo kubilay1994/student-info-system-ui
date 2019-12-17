@@ -39,15 +39,19 @@ const CourseForm = ({ courses, navigate, location }) => {
     }));
 
     const onSubmit = async (values, { resetForm, setStatus }) => {
-        console.log(values);
+        const body = {
+            ...values,
+            courseCode: values.courseCode.toUpperCase()
+        };
         try {
             if (editMode) {
-                await dispatch(updateCourse(values));
+                await dispatch(updateCourse(body));
                 resetForm({ values });
             } else {
-                await dispatch(addCourse(values));
+                await dispatch(addCourse(body));
                 resetForm();
             }
+            setStatus('İşlem Başarıyla Gerçekleştirildi');
         } catch (error) {
             if (error.response) {
                 setStatus(error.response.data);
@@ -83,6 +87,7 @@ const CourseForm = ({ courses, navigate, location }) => {
                         component={FormInput}
                         type="text"
                         label="Ders kodu*"
+                        inputClass={classes.uppercaseInput}
                     />
                     <Field
                         name="title"

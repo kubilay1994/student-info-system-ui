@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn {
+    margin-bottom: 1rem;
+}
+.select {
+    min-width: 14rem;
+    text-align: center;
+    text-align-last: center;
+    padding-left: 1rem;
+}
+
+.listContainer {
+    margin: 2.5rem;
+    max-width: 90%;
+    overflow: auto;
+}
+
+.selectContainer {
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+.gradeList {
+    border-collapse: collapse;
+}
+
+.gradeList tr {
+    border-bottom: 1px solid #00808057;
+}
+
+.gradeList tr:nth-child(even) {
+    background: #00808057;
+}
+
+.gradeList td,
+.gradeList th {
+    padding: 0.4rem;
+    text-align: center;
+}

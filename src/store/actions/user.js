@@ -26,11 +26,12 @@ export const fetchUserInfoAndSet = role => async dispatch => {
     if (role === 'Student') {
         url = '/api/rest/student/credentials';
     } else if (role === 'Instructor') {
-        url = '/api/rest/student/credentials';
+        url = '/api/rest/instructor/credentials';
     } else if (role === 'Admin') {
         return dispatch(setUser({}));
     }
 
     const res = await restAPI.get(url);
+    console.log(res);
     dispatch(setUser(res.data));
 };

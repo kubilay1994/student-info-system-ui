@@ -60,7 +60,6 @@ const CourseSchedule = ({ sections }) => {
             .map(() => new Array(7).fill(null));
         const gap = 8;
 
-        console.log(sections);
         for (const section of sections) {
             for (const {
                 startTime,
@@ -70,7 +69,6 @@ const CourseSchedule = ({ sections }) => {
                 const col = dayToNumber(day);
                 const start = Number.parseInt(startTime) - gap;
                 const end = Number.parseInt(finishTime) - gap;
-                console.log(col, start, end);
                 for (let i = start; i <= end; i++) {
                     schedule[i][col] = section;
                 }
@@ -79,7 +77,6 @@ const CourseSchedule = ({ sections }) => {
         return schedule;
     }, [sections]);
 
-    console.log(schedule);
 
     return (
         <div className={classes.container}>

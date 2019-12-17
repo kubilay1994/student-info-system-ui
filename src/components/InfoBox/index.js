@@ -9,7 +9,7 @@ const roleSelector = state => state.user.role;
 const InfoBox = ({ mode }) => {
     const user = useSelector(userSelector);
     const role = useSelector(roleSelector);
-    const studentSchema = [
+    let schema = [
         { label: ' Ad Soyad : ', data: ` ${user.firstName} ${user.lastName}` },
         { label: 'Numara : ', data: user.studentCode },
         {
@@ -20,13 +20,13 @@ const InfoBox = ({ mode }) => {
     ];
 
     if (mode === 'extend') {
-        studentSchema.push({ label: 'Alınan / Toplam Kredi : ', data: '0/0' });
-        studentSchema.push({ label: 'AGNO : ', data: '0' });
+        schema.push({ label: 'Alınan / Toplam Kredi : ', data: '0/0' });
+        schema.push({ label: 'AGNO : ', data: '0' });
     }
 
-    let schema;
     if (role === 'Student') {
-        schema = studentSchema;
+    } else if (role === 'Instructor') {
+        schema[1] = { label: 'Numara : ', data: user.instructorCode };
     } else {
         schema = [];
     }
@@ -39,6 +39,8 @@ const InfoBox = ({ mode }) => {
                     <small className={classes.data}>{item.data}</small>
                 </div>
             ))} */}
+
+            {role === 'Admin' && <h2>Admin</h2>}
 
             <div className={classes.item}>
                 {schema.map(({ label }) => (

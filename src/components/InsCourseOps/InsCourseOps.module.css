@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    text-align: center;
+    text-align-last: center;
+}
+
+.inputContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.input {
+    padding: 0.2rem;
+}
+
+.btn {
+    width: 50%;
+    margin: 1rem;
+}
+
+.btnContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.studentListContainer {
+    max-width: 90%;
+    overflow: auto;
+    max-height: 40rem;
+}
+
+.studentList {
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.studentList tbody tr:hover {
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.studentList tr:nth-child(even) {
+    background: #00808057;
+}
+
+.studentList td,
+.studentList th {
+    border-bottom: 2px solid #00808057;
+    padding: 0.5rem;
+}
+
+@media (min-width : 40rem) {
+    .input {
+        padding-left : 0.8rem;
+    }
+}

@@ -8,6 +8,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { Field } from 'formik';
 
+import { setMinutes, setHours } from 'date-fns';
+
 import { fetchDepClassrooms } from '../../store/actions/classroom';
 
 import { useDispatch, useSelector } from '../../store';
@@ -23,6 +25,17 @@ const dayOptions = [
 ].map(day => ({ value: day, label: day }));
 
 const classTypeOpts = ['Ders', 'Lab'].map(opt => ({ value: opt, label: opt }));
+
+const excludedTimes = [
+    setHours(setMinutes(new Date(), 0), 0),
+    setHours(setMinutes(new Date(), 0), 1),
+    setHours(setMinutes(new Date(), 0), 2),
+    setHours(setMinutes(new Date(), 0), 3),
+    setHours(setMinutes(new Date(), 0), 4),
+    setHours(setMinutes(new Date(), 0), 5),
+    setHours(setMinutes(new Date(), 0), 6),
+    setHours(setMinutes(new Date(), 0), 7),
+];
 
 const classroomSelector = state => state.classroom.classrooms;
 
@@ -92,6 +105,7 @@ const ClassroomPicker = ({ form, push, remove }) => {
                             timeCaption="Time"
                             timeFormat="HH:mm"
                             dateFormat="HH:mm"
+                            excludeTimes={excludedTimes}
                             selected={sectionClassrooms[index].startTime}
                             onChange={date =>
                                 setFieldValue(
@@ -110,6 +124,7 @@ const ClassroomPicker = ({ form, push, remove }) => {
                             timeFormat="H:mm"
                             dateFormat="H:mm"
                             selected={sectionClassrooms[index].finishTime}
+                            excludeTimes={excludedTimes}
                             onChange={date => {
                                 setFieldValue(
                                     `sectionClassrooms[${index}].finishTime`,

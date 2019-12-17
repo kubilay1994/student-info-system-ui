@@ -4,6 +4,7 @@ import { Router } from '@reach/router';
 
 import CourseEnroll from '../CourseEnroll';
 import StdEnrollList from '../StdEnrollList';
+import StudentGrades from '../StudentGrades';
 
 import { term, year } from '../../utils/constants';
 
@@ -63,8 +64,8 @@ const StudentRouter = ({ termSections }) => {
 
     return (
         <Router primary={false}>
-            <CourseSchedule path="courseSchedule" sections={studentSections} />
-
+            <CourseSchedule path="courseSchedule" sections={enrolledSections} />
+            <StudentGrades path="grades" />
             <CourseEnroll
                 path="enrollCourse"
                 sections={termSections}

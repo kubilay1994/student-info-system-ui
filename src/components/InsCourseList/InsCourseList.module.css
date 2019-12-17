@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.info {
+    font-style: italic;
+    font-weight: bold;
+    font-size: small;
+    margin : 0.3rem;
+}
+
+.tableContainer {
+    margin: 3rem;
+    max-width: 90%;
+    overflow: auto;
+    max-height: 40rem;
+}
+
+.givenCourses {
+    /* border-collapse: collapse; */
+    padding: 1rem;
+    border: 3px dotted #00808057;
+}
+
+.givenCourses tbody tr:hover {
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.givenCourses tr:nth-child(even) {
+    background: #00808057;
+}
+
+.givenCourses td,
+.givenCourses th {
+    border-radius: 10%;
+    border: 2px solid #00808057;
+    padding: 0.4rem;
+}

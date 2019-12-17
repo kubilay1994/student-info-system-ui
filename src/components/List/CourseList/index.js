@@ -25,6 +25,7 @@ const CourseList = ({ courses, navigate }) => {
         });
     };
 
+
     const handleTrashIconClicked = id => {
         willBeDeletedId.current = id;
         setIsModalOpen(true);

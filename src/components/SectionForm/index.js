@@ -65,14 +65,19 @@ const SectionForm = ({ location, navigate }) => {
             quota: values.quota
         };
 
-
         try {
             if (editMode) {
                 await dispatch(updateSection(body, editedSection.id));
+                setStatus('İşlem Başarıyla Gerçekleştirildi');
+
+                navigate(`./`, {
+                    state: { editedSection: values }
+                });
             } else {
                 await dispatch(addSection(body));
+                resetForm();
+                setStatus('İşlem Başarıyla Gerçekleştirildi');
             }
-            resetForm();
         } catch (error) {
             resetForm();
             if (error.response) {
@@ -126,6 +131,7 @@ const SectionForm = ({ location, navigate }) => {
                                 containerClass={classes.input}
                                 inputClass={classes.numAlign}
                                 min="1"
+                                disabled={editMode}
                             />
 
                             <Field

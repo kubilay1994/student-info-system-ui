@@ -5,7 +5,6 @@ import InfoBox from '../InfoBox';
 import classes from './StdEnrollList.module.css';
 
 const StdEnrollList = ({ studentSections }) => {
-    console.log(studentSections);
     return (
         <div className={classes.container}>
             <InfoBox mode="extend" />

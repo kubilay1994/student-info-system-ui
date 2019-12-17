@@ -15,14 +15,16 @@
 }
 
 .courseNumInput {
-    width : 100%;
+    width: 100%;
 }
 
 .center {
     align-self: center;
 }
 
-
+.uppercaseInput {
+    text-transform: uppercase;
+}
 
 .btnContainer {
     display: flex;

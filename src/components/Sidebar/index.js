@@ -17,7 +17,10 @@ import {
     FaBookOpen,
     FaBook,
     FaChessBoard,
-    FaListUl
+    FaListUl,
+    FaUserGraduate,
+    FaChalkboardTeacher,
+    FaListOl
 } from 'react-icons/fa';
 
 const isActive = ({ isCurrent }) => {
@@ -95,6 +98,15 @@ const Sidebar = ({ onLogout, open, onLinkClicked }) => {
                             onLinkClicked={onLinkClicked}
                         />
                     )}
+
+                    {role === 'Instructor' && (
+                        <Dropdown
+                            isActive={isActive}
+                            headerData={insHeaderData}
+                            itemData={insData}
+                            onLinkClicked={onLinkClicked}
+                        />
+                    )}
                     <Button
                         btnCLass={classes.sidebarBtn}
                         onClick={onLogout}
@@ -109,6 +121,27 @@ const Sidebar = ({ onLogout, open, onLinkClicked }) => {
 };
 
 export default Sidebar;
+
+const insHeaderData = {
+    title: 'Öğretmen İşlemleri',
+    path: '#',
+    HeaderIcon: FaChalkboardTeacher
+};
+
+const insData = [
+    {
+        id: 1,
+        path: 'instructor/courseList',
+        title: 'Verilen Ders Listesi',
+        Icon: FaListOl
+    },
+    {
+        id: 2,
+        path: 'instructor/courseSchedule',
+        title: 'Ders Programı',
+        Icon: FaClipboardList
+    }
+];
 
 const courseOpsHeaderData = {
     title: 'Ders İşlemleri',
@@ -134,6 +167,12 @@ const courseOpData = [
         path: 'student/courseSchedule',
         title: 'Ders Programı',
         Icon: FaClipboardList
+    },
+    {
+        id: 4,
+        path: 'student/grades',
+        title: 'Öğrencinin Ders Notları',
+        Icon: FaUserGraduate
     }
 ];
 

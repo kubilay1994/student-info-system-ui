@@ -41,6 +41,7 @@ const SectionList = ({ sections, navigate }) => {
         });
     };
 
+
     const handleTrashIconClicked = id => {
         willBeDeletedId.current = id;
         setIsModalOpen(true);
@@ -50,7 +51,6 @@ const SectionList = ({ sections, navigate }) => {
         dispatch(deleteSection(willBeDeletedId.current));
         setIsModalOpen(false);
     };
-
 
     return (
         <div className={classes.container}>
@@ -95,11 +95,12 @@ const SectionList = ({ sections, navigate }) => {
                     >
                         <thead>
                             <tr>
+                                <th>Dönem</th>
                                 <th>Kod</th>
                                 <th>Grup No</th>
                                 <th>Dersin Adı</th>
                                 <th>Dersin Dili</th>
-                                {/* <th>Kapasite</th> */}
+                                <th>Kapasite</th>
                                 <th>Takvim</th>
                                 <th></th>
                             </tr>
@@ -107,10 +108,12 @@ const SectionList = ({ sections, navigate }) => {
                         <tbody>
                             {sections.map(s => (
                                 <tr key={s.id}>
+                                    <td>{`${s.year} ${s.term}`}</td>
                                     <td>{s.course.courseCode}</td>
                                     <td>{s.sectionCode.split('-')[1]}</td>
                                     <td>{s.course.title}</td>
                                     <td>{s.course.language}</td>
+                                    <td>{s.quota}</td>
                                     <td>
                                         {s.sectionClassrooms.map(cl => (
                                             <div key={cl.id}>
