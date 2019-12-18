@@ -37,7 +37,7 @@ const schema = Yup.object().shape({
 
 const coursesSelector = state => state.course.courses;
 
-const SectionForm = ({ location, navigate }) => {
+const SectionForm = ({ location, navigate, instructors }) => {
     const courses = useSelector(coursesSelector);
     const dispatch = useCallback(useDispatch(), []);
 
@@ -48,7 +48,11 @@ const SectionForm = ({ location, navigate }) => {
 
     const editedSection = location.state ? location.state.editedSection : null;
     const editMode = !!editedSection;
-    const instOpts = [{ value: '99011001', label: 'M Utku Kalay' }];
+
+    const instOpts = instructors.map(i => ({
+        value: i.instructorCode,
+        label: `${i.firstName} ${i.lastName}`
+    }));
 
     const onSubmit = async (values, { resetForm, setStatus }) => {
         const body = {

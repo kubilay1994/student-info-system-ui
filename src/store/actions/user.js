@@ -32,6 +32,6 @@ export const fetchUserInfoAndSet = role => async dispatch => {
     }
 
     const res = await restAPI.get(url);
-    console.log(res);
+    // console.log(res);
     dispatch(setUser(res.data));
 };

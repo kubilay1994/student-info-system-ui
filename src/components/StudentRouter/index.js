@@ -35,7 +35,7 @@ const StudentRouter = ({ termSections }) => {
                 const res = await restAPI.get(baseUrl);
                 setStudentSections(res.data);
             } catch (error) {
-                console.log(error.response);
+                // console.log(error.response);
             }
         };
 

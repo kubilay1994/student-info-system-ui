@@ -20,7 +20,7 @@ const InstructorRouter = () => {
                 const res = await restAPI.get(`${baseUrl}/${year}/${term}`);
                 setGivenSections(res.data);
             } catch (error) {
-                console.log(error.response);
+                // console.log(error.response);
             }
         };
 

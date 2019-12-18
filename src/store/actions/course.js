@@ -22,7 +22,7 @@ export const deleteCourse = id => async dispatch => {
         await restAPI.delete(`${adminCoursePath}/${id}`);
         dispatch({ type: DELETE_COURSE, id });
     } catch (error) {
-        console.log(error);
+        console.log(error.response);
     }
 };
 

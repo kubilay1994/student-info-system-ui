@@ -41,7 +41,7 @@ const StudentGrades = () => {
                         const res = await restAPI.get(
                             `/api/rest/student/studentsections/${year}/${term}`
                         );
-                        console.log(res);
+                        // console.log(res);
                         if (res.data.length === 0) {
                             setStatus(
                                 `Öğrencinin ${year} ${term} döneminde aldığı ders bulunmamaktadır`
@@ -99,10 +99,22 @@ const StudentGrades = () => {
                                     <td>{s.course.title}</td>
                                     <td>{s.sectionCode.split('-')[1]}</td>
                                     <td>{`${s.instructor.firstName} ${s.instructor.lastName}`}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>
+                                        {grades['Vize 1'] &&
+                                            grades['Vize 1'].grade}
+                                    </td>
+                                    <td>
+                                        {grades['Vize 2'] &&
+                                            grades['Vize 2'].grade}
+                                    </td>
+                                    <td>
+                                        {grades['Final'] &&
+                                            grades['Final'].grade}
+                                    </td>
+                                    <td>
+                                        {grades['Proje'] &&
+                                            grades['Proje'].grade}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

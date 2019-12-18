@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classes from './InsCourseOps.module.css';
 import restAPI from '../../axios-instances';
+import ErrorInfo from '../ErrorInfo';
 
 import { Formik, Field, Form } from 'formik';
 import { Select, Button, FormInput } from '../../UIcomponents';
@@ -15,15 +16,15 @@ const gradeOps = [
 const InsCourseOps = ({ location, navigate }) => {
     const [studentList, setStudentList] = useState([]);
     const [selectedStudent, setSelectedStudent] = useState(null);
+
     useEffect(() => {
         const fetchStudentListForGivenCourse = async id => {
             const baseUrl = '/api/rest/instructor/students';
             try {
                 const res = await restAPI.get(`${baseUrl}/${id}`);
-                console.log(res);
                 setStudentList(res.data);
             } catch (error) {
-                console.log(error.response);
+                // console.log(error.response);
             }
         };
         if (location.state && location.state.section) {
@@ -31,23 +32,26 @@ const InsCourseOps = ({ location, navigate }) => {
         }
     }, [location.state]);
 
-    const handleGradeSubmit = async (values, { resetForm }) => {
+    const handleGradeSubmit = async (values, { resetForm, setStatus }) => {
         const body = {
-            [values.type]: `${values.grade}`
+            [values.type]: values.grade
         };
 
         const studentSection = selectedStudent.studentSections.find(
             st => st.section.id === location.state.section.id
         );
-        console.log(body);
+
         try {
             const res = await restAPI.post(
                 `/api/rest/instructor/grades/${studentSection.id}`,
                 body
             );
-            console.log(res);
+            setSelectedStudent(null);
         } catch (error) {
-            console.log(error.response);
+            if (error.response) {
+                setStatus('Bir Hata oluştu');
+            }
+            // console.log(error.response);
         }
     };
 
@@ -98,8 +102,9 @@ const InsCourseOps = ({ location, navigate }) => {
                             }}
                             onSubmit={handleGradeSubmit}
                         >
-                            {({ isSubmitting }) => (
+                            {({ isSubmitting, status }) => (
                                 <Form>
+                                    <ErrorInfo message={status} />
                                     <h3>{`${selectedStudent.studentCode} Numaralı Öğrenci için Not Girişi`}</h3>
                                     <div className={classes.inputContainer}>
                                         <Field
