@@ -34,7 +34,7 @@ const excludedTimes = [
     setHours(setMinutes(new Date(), 0), 4),
     setHours(setMinutes(new Date(), 0), 5),
     setHours(setMinutes(new Date(), 0), 6),
-    setHours(setMinutes(new Date(), 0), 7),
+    setHours(setMinutes(new Date(), 0), 7)
 ];
 
 const classroomSelector = state => state.classroom.classrooms;
@@ -88,12 +88,14 @@ const ClassroomPicker = ({ form, push, remove }) => {
                                 options={dayOptions}
                                 label="Ders Günü"
                                 containerClass={classes.select}
+                                labelClass={classes.selectLabel}
                             />
                             <Field
                                 label="Derslik Tipi"
                                 name={`sectionClassrooms[${index}].type`}
                                 component={Select}
                                 options={classTypeOpts}
+                                labelClass={classes.selectLabel}
                             />
                         </div>
                         <DatePicker

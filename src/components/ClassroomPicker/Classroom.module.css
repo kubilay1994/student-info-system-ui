@@ -52,6 +52,11 @@
     overflow: auto;
 }
 
+
+.selectLabel {
+    white-space: nowrap;
+}
+
 .title {
     margin: 0;
     padding-top: 1rem;
