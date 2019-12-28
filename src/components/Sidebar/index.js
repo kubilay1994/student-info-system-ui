@@ -61,16 +61,21 @@ const Sidebar = ({ onLogout, open, onLinkClicked }) => {
                         </Link>
                     </li>
 
-                    <li className={classes.item}>
-                        <Link
-                            to="updateContactInfo"
-                            getProps={isActive}
-                            onClick={onLinkClicked}
-                        >
-                            <FaAddressBook size={20} className={classes.icon} />
-                            İletişim Bilgisi Düzenleme
-                        </Link>
-                    </li>
+                    {role !== 'Admin' && (
+                        <li className={classes.item}>
+                            <Link
+                                to="updateContactInfo"
+                                getProps={isActive}
+                                onClick={onLinkClicked}
+                            >
+                                <FaAddressBook
+                                    size={20}
+                                    className={classes.icon}
+                                />
+                                İletişim Bilgisi Düzenleme
+                            </Link>
+                        </li>
+                    )}
                     <li className={classes.item}>
                         <Link
                             to="offeredCourses"

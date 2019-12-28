@@ -59,7 +59,7 @@ const InsCourseOps = ({ location, navigate }) => {
         <div className={classes.container}>
             <h2>{`${location.state.section.course.title} Dersi Öğrenci Listesi ve Not İşlemleri Sayfası`}</h2>
 
-            {studentList.length > 0 && (
+            {studentList.length > 0 ? (
                 <div className={classes.studentListContainer}>
                     <table className={classes.studentList}>
                         <thead>
@@ -153,6 +153,8 @@ const InsCourseOps = ({ location, navigate }) => {
                         </Formik>
                     )}
                 </div>
+            ) : (
+                <ErrorInfo message="Seçilen Derste Öğrenci Bulunmamaktadır" />
             )}
         </div>
     ) : null;

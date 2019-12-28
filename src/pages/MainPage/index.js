@@ -15,7 +15,12 @@ import restAPI from '../../axios-instances';
 import { useSelector } from '../../store';
 import { term, year } from '../../utils/constants';
 
-const commonSectionPath = '/api/rest/common/sections';
+const instructorCommonSectionPath = '/api/rest/instructor/sections/common';
+const studentCommonSectionPath = '/api/rest/student/sections/common';
+const adminCommonSectionPath = '/api/rest/admin/sections/common';
+
+// const s
+
 const roleSelector = state => state.user.role;
 
 const MainPage = () => {
@@ -23,9 +28,20 @@ const MainPage = () => {
     const role = useSelector(roleSelector);
     useEffect(() => {
         const fetchSectionByYearAndTerm = async () => {
+            let url;
+            if (role === 'Admin') {
+                url = adminCommonSectionPath;
+            } else if (role === 'Student') {
+                url = studentCommonSectionPath;
+            } else if (role === 'Instructor') {
+                url = instructorCommonSectionPath;
+            } else {
+                return;
+            }
+
             try {
                 const res = await restAPI.get(
-                    `${commonSectionPath}/${year}/${term}`
+                    `${url}/${year}/${term}`
                 );
                 setTermSections(res.data);
             } catch (error) {
@@ -42,7 +58,7 @@ const MainPage = () => {
         <>
             <MainLayout />
             <Router primary={false}>
-                <InfoForm path="updateContactInfo" />
+                {role !== 'Admin' && <InfoForm path="updateContactInfo" />}
                 <OpenedSections
                     path="offeredCourses"
                     termSections={termSections}
