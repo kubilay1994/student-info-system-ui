@@ -41,7 +41,6 @@ const SectionList = ({ sections, navigate }) => {
         });
     };
 
-
     const handleTrashIconClicked = id => {
         willBeDeletedId.current = id;
         setIsModalOpen(true);
@@ -113,7 +112,7 @@ const SectionList = ({ sections, navigate }) => {
                                     <td>{s.sectionCode.split('-')[1]}</td>
                                     <td>{s.course.title}</td>
                                     <td>{s.course.language}</td>
-                                    <td>{s.quota}</td>
+                                    <td>{`${s.studentCount}/${s.quota}`}</td>
                                     <td>
                                         {s.sectionClassrooms.map(cl => (
                                             <div key={cl.id}>

@@ -1,5 +1,5 @@
-const axios = require('axios');
-
+// const axios = require('axios');
+import axios from 'axios';
 const tokenUrl = 'http://localhost:8082/api/auth/generatetoken';
 
 const getToken = async () => {
@@ -22,7 +22,7 @@ const spamRequest = async () => {
         });
         i++;
 
-        console.log(res,i);
+        console.log(res, i);
     }
 };
 

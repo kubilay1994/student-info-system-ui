@@ -12,7 +12,6 @@
     text-align: center;
 }
 
-
 .formSelectContainer {
     align-items: center;
     padding: 0.4rem;
@@ -59,7 +58,6 @@
 .numAlign {
     text-align: center;
     padding: 0.3rem;
-    padding-left: 1rem;
     width: 70%;
 }
 
@@ -93,5 +91,9 @@
 
     .formButton {
         width: 35%;
+    }
+
+    .numAlign {
+        padding-left: 1rem;
     }
 }
