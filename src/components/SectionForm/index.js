@@ -72,15 +72,15 @@ const SectionForm = ({ location, navigate, instructors }) => {
         try {
             if (editMode) {
                 await dispatch(updateSection(body, editedSection.id));
-                setStatus('İşlem Başarıyla Gerçekleştirildi');
 
-                navigate(`./`, {
-                    state: { editedSection: values }
-                });
+                // navigate(`./`, {
+                //     state: { editedSection: values }
+                // });
+                navigate('../../');
             } else {
                 await dispatch(addSection(body));
-                resetForm();
-                setStatus('İşlem Başarıyla Gerçekleştirildi');
+                navigate('../../');
+
             }
         } catch (error) {
             resetForm();

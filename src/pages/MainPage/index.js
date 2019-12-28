@@ -25,7 +25,10 @@ const roleSelector = state => state.user.role;
 
 const MainPage = () => {
     const [termSections, setTermSections] = useState([]);
+
     const role = useSelector(roleSelector);
+
+    
     useEffect(() => {
         const fetchSectionByYearAndTerm = async () => {
             let url;
@@ -40,9 +43,7 @@ const MainPage = () => {
             }
 
             try {
-                const res = await restAPI.get(
-                    `${url}/${year}/${term}`
-                );
+                const res = await restAPI.get(`${url}/${year}/${term}`);
                 setTermSections(res.data);
             } catch (error) {
                 // console.log(error.message);
@@ -52,7 +53,7 @@ const MainPage = () => {
         };
 
         fetchSectionByYearAndTerm();
-    }, []);
+    }, [role]);
 
     return (
         <>
