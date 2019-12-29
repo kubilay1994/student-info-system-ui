@@ -28,6 +28,8 @@ const AdminRouter = () => {
         dispatch(fetchDepInstructors());
     }, [dispatch]);
 
+
+    console.log(courses);
     return (
         <Router primary={false}>
             <SectionList path="sections" sections={sections} />

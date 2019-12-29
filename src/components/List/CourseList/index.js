@@ -18,13 +18,13 @@ const CourseList = ({ courses, navigate }) => {
     const handleEditIconClick = c => {
         const { department, ...course } = c;
         course.departmentCode = 'BLM';
+        course.prerequisites = course.prerequisites.map(p => p.courseCode);
         navigate('./edit/' + c.id, {
             state: {
                 editedCourse: course
             }
         });
     };
-
 
     const handleTrashIconClicked = id => {
         willBeDeletedId.current = id;

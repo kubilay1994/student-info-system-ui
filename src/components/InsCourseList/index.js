@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ErrorInfo from '../ErrorInfo';
 import classes from './InsCourseList.module.css';
 import { term, year } from '../../utils/constants';
 
@@ -11,12 +12,13 @@ const InsCourseList = ({ sections, navigate }) => {
         <div className={classes.container}>
             <h2>{`${year} ${term} Döneminde Vermiş Olduğunuz Ders Listesi`}</h2>
 
-            <div className={classes.tableContainer}>
-                <div className={classes.info}>
-                    Öğrenci Not Girişi ve Benzeri İşlemler İçin Seçmiş Olduğunuz
-                    Dersin Üstüne Tıklayınız
-                </div>
-                {sections.length > 0 && (
+            {sections.length > 0 ? (
+                <div className={classes.tableContainer}>
+                    <div className={classes.info}>
+                        Öğrenci Not Girişi ve Benzeri İşlemler İçin Seçmiş
+                        Olduğunuz Dersin Üstüne Tıklayınız
+                    </div>
+
                     <table className={classes.givenCourses}>
                         <thead>
                             <tr>
@@ -42,8 +44,10 @@ const InsCourseList = ({ sections, navigate }) => {
                             ))}
                         </tbody>
                     </table>
-                )}
-            </div>
+                </div>
+            ) : (
+                <ErrorInfo message="Vermiş olduğunuz bir ders bulunmamaktadır" />
+            )}
         </div>
     );
 };

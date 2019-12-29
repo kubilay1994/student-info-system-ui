@@ -6,7 +6,7 @@
 }
 
 .listContainer {
-    margin: 2.5rem;
+    margin: 2.5rem 0;
     max-width: 90%;
     overflow: auto;
 }

@@ -7,7 +7,7 @@ import classes from './StdEnrollList.module.css';
 const StdEnrollList = ({ studentSections }) => {
     return (
         <div className={classes.container}>
-            <InfoBox mode="extend" />
+            <InfoBox  />
 
             {studentSections && studentSections.length > 0 && (
                 <div className={classes.listContainer}>

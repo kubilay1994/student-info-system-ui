@@ -44,7 +44,7 @@ const dayToNumber = day => {
 
 const renderSectionInfoBox = (section, index) =>
     section ? (
-        <td key={index}>
+        <td key={index} className={section.type === 'Lab' ? classes.lab : null}>
             <div>{section.course.title}</div>
             <div>{`${section.course.courseCode} ${section.sectionCode}`}</div>
             <div>Bilgisayar Mühendisliği</div>
@@ -64,23 +64,25 @@ const CourseSchedule = ({ sections }) => {
             for (const {
                 startTime,
                 finishTime,
-                day
+                day,
+                type
             } of section.sectionClassrooms) {
                 const col = dayToNumber(day);
                 const start = Number.parseInt(startTime) - gap;
                 const end = Number.parseInt(finishTime) - gap;
                 for (let i = start; i <= end; i++) {
-                    schedule[i][col] = section;
+                    schedule[i][col] = { ...section };
+                    schedule[i][col].type = type;
                 }
             }
         }
         return schedule;
     }, [sections]);
 
-
     return (
         <div className={classes.container}>
             <h3 className={classes.title}>Ders Programı</h3>
+
             <table className={classes.table}>
                 <thead>
                     <tr>
@@ -105,6 +107,10 @@ const CourseSchedule = ({ sections }) => {
                     ))}
                 </tbody>
             </table>
+            <p className={classes.info}>
+                Kırmızı ile yazılan ders saatleri o derslerin lablarını
+                göstermektedir.
+            </p>
         </div>
     );
 };

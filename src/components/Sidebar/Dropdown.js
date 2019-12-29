@@ -11,7 +11,7 @@ const Dropdown = ({ isActive, headerData, itemData, onLinkClicked }) => {
 
     return (
         <li className={classes.dropDownHeader}>
-            <Link to={headerData.path} getProps={isActive}>
+            <Link to={headerData.path} getProps={isActive} >
                 <HeaderIcon className={classes.icon} size={20} />
                 {headerData.title}
                 <FaCaretLeft className={classes.caretIcon} />

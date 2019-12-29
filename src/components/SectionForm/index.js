@@ -79,7 +79,7 @@ const SectionForm = ({ location, navigate, instructors }) => {
                 navigate('../../');
             } else {
                 await dispatch(addSection(body));
-                navigate('../../');
+                navigate('../');
 
             }
         } catch (error) {

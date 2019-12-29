@@ -98,6 +98,7 @@ const SectionList = ({ sections, navigate }) => {
                                 <th>Kod</th>
                                 <th>Grup No</th>
                                 <th>Dersin Adı</th>
+                                <th>Dersin Öğretmeni</th>
                                 <th>Dersin Dili</th>
                                 <th>Kapasite</th>
                                 <th>Takvim</th>
@@ -111,11 +112,13 @@ const SectionList = ({ sections, navigate }) => {
                                     <td>{s.course.courseCode}</td>
                                     <td>{s.sectionCode.split('-')[1]}</td>
                                     <td>{s.course.title}</td>
+                                    <td>{`${s.instructor.firstName} ${s.instructor.lastName}`}</td>
                                     <td>{s.course.language}</td>
                                     <td>{`${s.studentCount}/${s.quota}`}</td>
                                     <td>
                                         {s.sectionClassrooms.map(cl => (
-                                            <div key={cl.id}>
+                                            //Math.random yerine id lazım
+                                            <div key={Math.random()}>
                                                 {`${cl.classroomCode} ${cl.day} ${cl.startTime}- ${cl.finishTime}`}
                                             </div>
                                         ))}

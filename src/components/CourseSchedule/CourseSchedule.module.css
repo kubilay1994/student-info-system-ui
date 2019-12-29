@@ -25,10 +25,21 @@
     border: 2px solid #008080;
     padding: 0.75rem;
     text-align: center;
-    width : 30rem;
+    width: 30rem;
 }
 .table td div {
     padding: 0.3rem;
+}
+
+.info {
+    font-style: italic;
+    font-size : 0.9rem;
+    color : crimson;
+    margin-left : 3rem;
+}
+
+.table td.lab {
+    color: crimson;
 }
 
 .table th {
