@@ -30,7 +30,6 @@ export const deleteCourse = id => async dispatch => {
 
 export const updateCourse = course => async dispatch => {
     const res = await restAPI.put(`${adminCoursePath}/${course.id}`, course);
-    console.log(res.data);
     dispatch({ type: UPDATE_COURSE, course: res.data });
     dispatch({ type: ON_COURSE_UPDATE, course: res.data });
 };

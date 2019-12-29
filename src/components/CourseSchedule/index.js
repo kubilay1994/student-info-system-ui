@@ -70,7 +70,7 @@ const CourseSchedule = ({ sections }) => {
                 const col = dayToNumber(day);
                 const start = Number.parseInt(startTime) - gap;
                 const end = Number.parseInt(finishTime) - gap;
-                for (let i = start; i <= end; i++) {
+                for (let i = start; i < end; i++) {
                     schedule[i][col] = { ...section };
                     schedule[i][col].type = type;
                 }
@@ -78,6 +78,8 @@ const CourseSchedule = ({ sections }) => {
         }
         return schedule;
     }, [sections]);
+
+    // console.log(sections, 'hello');
 
     return (
         <div className={classes.container}>
