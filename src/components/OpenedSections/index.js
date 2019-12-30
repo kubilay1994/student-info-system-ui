@@ -34,7 +34,7 @@ const OpenedSections = () => {
             }
 
             try {
-                const res = await restAPI.get(`${url}/${year}/${term}`);
+                const res = await restAPI.get(`${url}/${year}/${term}?query=`);
                 setTermSections(res.data);
             } catch (error) {
                 // console.log(error.message);

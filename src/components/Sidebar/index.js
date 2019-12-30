@@ -191,7 +191,7 @@ const dropdownItemData = [
     {
         id: 1,
         path: '/admin/sections',
-        title: 'Ders Grubu Ekleme',
+        title: 'Ders Grup İşlemleri',
         Icon: FaUserShield
     },
 

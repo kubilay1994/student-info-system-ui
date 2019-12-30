@@ -6,20 +6,40 @@ import classes from './CourseEnroll.module.css';
 import EnrollList from '../EnrollList';
 import ErrorInfo from '../ErrorInfo';
 
+import restAPI from '../../axios-instances';
+import { term, year } from '../../utils/constants';
+
 const CourseEnroll = ({ sections, enrolledSections, onEnroll, onUnenroll }) => {
     const [filterInput, setFilterInput] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [enrollError, setEnrollError] = useState('');
 
+    const [filteredTermSections, setFilteredTermSections] = useState([]);
+
     const sectionRef = useRef(null);
 
-    const filterSections = () => {
-        // const filteredSections = sections.filter(
-        //     s => s.course.courseCode === filterInput
-        // );
-        // console.log(sections, filteredSections);
-        // console.log('hello');
-        //Later with server
+    const enrollCourseList =
+        filteredTermSections.length > 0 ? filteredTermSections : sections;
+
+    const filterSections = async () => {
+        if (filterInput.trim().length === 0) {
+            return setFilteredTermSections([]);
+        }
+
+        try {
+            const res = await restAPI(
+                `/api/rest/student/sections/common/${year}/${term}`,
+                {
+                    params: {
+                        query: filterInput
+                    }
+                }
+            );
+            console.log(res);
+            setFilteredTermSections(res.data);
+        } catch (error) {
+            console.log(error.response);
+        }
     };
 
     const handleScheduleClick = s => {
@@ -63,12 +83,16 @@ const CourseEnroll = ({ sections, enrolledSections, onEnroll, onUnenroll }) => {
 
             <ErrorInfo message={enrollError} />
 
-            <EnrollList
-                data={sections}
-                onScheduleClick={handleScheduleClick}
-                onEnroll={onEnroll}
-                onError={handleApiError}
-            />
+            {enrollCourseList.length > 0 ? (
+                <EnrollList
+                    data={enrollCourseList}
+                    onScheduleClick={handleScheduleClick}
+                    onEnroll={onEnroll}
+                    onError={handleApiError}
+                />
+            ) : (
+                <ErrorInfo message="Ders bulunamadı" />
+            )}
 
             {enrolledSections && enrolledSections.length > 0 && (
                 <>

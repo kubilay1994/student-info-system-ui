@@ -17,6 +17,7 @@ const StudentRouter = ({ termSections }) => {
     const [enrolledSections, setEnrolledSections] = useState([]);
     const [studentSections, setStudentSections] = useState([]);
 
+
     useEffect(() => {
         const fetchEnrollledSections = async () => {
             const url = `${baseUrl}/${year}/${term}`;

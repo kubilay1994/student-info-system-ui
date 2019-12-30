@@ -28,7 +28,6 @@ const MainPage = () => {
 
     const role = useSelector(roleSelector);
 
-    
     useEffect(() => {
         const fetchSectionByYearAndTerm = async () => {
             let url;
@@ -43,12 +42,14 @@ const MainPage = () => {
             }
 
             try {
-                const res = await restAPI.get(`${url}/${year}/${term}`);
+                const res = await restAPI.get(
+                    `${url}/${year}/${term}${role === 'Student' && '?query='}`
+                );
                 setTermSections(res.data);
             } catch (error) {
-                // console.log(error.message);
-                // console.log(error.response);
-                // console.log(error.request);
+                console.log(error.message);
+                console.log(error.response);
+                console.log(error.request);
             }
         };
 
