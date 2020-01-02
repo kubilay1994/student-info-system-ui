@@ -42,7 +42,7 @@ const InsCourseOps = ({ location, navigate }) => {
         );
 
         try {
-            const res = await restAPI.post(
+            await restAPI.post(
                 `/api/rest/instructor/grades/${studentSection.id}`,
                 body
             );
